@@ -61,3 +61,21 @@
   2. Deployed to Google Cloud Run in region `us-central1` under GCP project `geapdemo` with `--allow-unauthenticated`.
   3. **Live Public Web Portal**: [https://terrascan-795926523320.us-central1.run.app](https://terrascan-795926523320.us-central1.run.app)
   4. Tested and verified HTTP/2 200 response; real-time sidebar navigation and markdown rendering confirmed functional.
+
+### Step 9: End-to-End Web App Diagnosis, MathJax/Sidebar Fixes & Browser Verification (Completed)
+- **Defects Reported**:
+  1. Left sidebar stuck on *"Loading TerraScan v2 Research Dossier..."* instead of rendering page links.
+  2. Chemical reactions and formulas showing raw unrendered LaTeX markup (`\xrightarrow`, `\xrightleftharpoons`, `\text{COO}^-`).
+  3. User requested public GitHub repository visibility.
+- **Root Cause Analysis**:
+  1. **Docsify Subfolder Routing Bug**: In subfolder paths (`#/research/...`), Docsify requested `/research/_sidebar.md`. Because the file did not exist in subfolders, Nginx fell back to `index.html` via `try_files $uri $uri/ /index.html` (HTTP 200). Docsify attempted to parse the HTML of `index.html` as markdown, extracted the fallback placeholder `<div id="app">Loading...</div>`, and rendered that placeholder into `.sidebar-nav`.
+  2. **Script Order & MathJax Collision**: `docsify-latex` was loaded before `docsify.js`, violating plugin dependency requirements. Complex reaction macros inside standard markdown were also mangled by markdown parsers before MathJax could process them.
+  3. **Browser Disk Caching**: Lack of aggressive cache-busting headers allowed client browsers to serve stale, pre-fix HTML/JS files from disk cache.
+- **Remediations Implemented**:
+  1. **Routing & Fallback**: Configured Docsify path aliasing `alias: { '/.*/_sidebar.md': '/_sidebar.md' }`, copied fallback `_sidebar.md` into all subdirectories, and configured Nginx to route all `/_sidebar.md` requests directly to root.
+  2. **Cache-Control & Empty App Container**: Emptied the `<div id="app"></div>` container, added no-cache meta tags, and added strict HTTP response headers (`Cache-Control: no-store, no-cache, must-revalidate, max-age=0`) in `nginx.conf`.
+  3. **Chemical Reaction Formatting**: Replaced fragile LaTeX macros in `01_soil_science_fundamentals.md` with beautiful, universal UTF-8 Unicode reaction boxes (`──▶`, `⇋`, `NH₄⁺`, `NO₃⁻`, `HPO₄²⁻`), guaranteeing 100% platform-independent readability.
+  4. **Model Documentation**: Created `models/baselines/README.md` and `models/fno_v2/README.md` to prevent 404s when navigating model code links from the sidebar.
+  5. **GitHub Visibility**: Converted GitHub repository [https://github.com/mumanoha/terrascan](https://github.com/mumanoha/terrascan) to **PUBLIC** and verified GitHub Pages at [https://mumanoha.github.io/terrascan/](https://mumanoha.github.io/terrascan/).
+  6. **Automated Headless Chrome E2E Verification**: Tested rendering of `07_gap_analysis_v1_vs_literature` and `01_soil_science_fundamentals` directly on Google Cloud Run revision `terrascan-00003-mzb` using Headless Google Chrome, confirming 100% clean sidebar navigation, zero "Loading..." text, and perfect chemical reaction formatting.
+
