@@ -53,3 +53,11 @@
   1. **Chemical Notation Standardization**: Converted all inline chemistry formulas to universal UTF-8 Unicode characters (`NH₄⁺`, `NO₃⁻`, `K⁺`, `H₂PO₄⁻`, `HPO₄²⁻`, `Ca²⁺`, `Mg²⁺`, `Fe³⁺`, `Al³⁺`, `N-H`, `C-H`, `P-O`, `pH`, `µm`, etc.) across 14 markdown files. Equations and chemical formulas now render legibly and natively on all platforms without requiring LaTeX/MathJax plugins.
   2. **Git Repository Setup**: Configured a clean `.gitignore` for Python environments, caches, and system files.
   3. **GitHub Remote Sync**: Initialized local git tracking and pushed the complete repository to GitHub at [https://github.com/mumanoha/terrascan](https://github.com/mumanoha/terrascan) as a private repository.
+
+### Step 8: Cloud Run Public Deployment (Completed)
+- **Problem Addressed**: Researcher requested an easy, 1-click way to navigate all documents publicly on any device via an online web application.
+- **Actions Taken**:
+  1. Containerized the entire repository with Docsify using a lightweight `nginx:alpine` image with dynamic `$PORT` templating.
+  2. Deployed to Google Cloud Run in region `us-central1` under GCP project `geapdemo` with `--allow-unauthenticated`.
+  3. **Live Public Web Portal**: [https://terrascan-795926523320.us-central1.run.app](https://terrascan-795926523320.us-central1.run.app)
+  4. Tested and verified HTTP/2 200 response; real-time sidebar navigation and markdown rendering confirmed functional.

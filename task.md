@@ -48,3 +48,7 @@ Elevate TerraScan from a Grade 9 PJAS science fair presentation to an ISEF / Reg
 - [x] **Part 4, Step 7: Universal Markdown Rendering & Remote Git Sync**
   - [x] Standardized chemical rendering across all 14 markdown files using clean, universal Unicode (NH₄⁺, NO₃⁻, K⁺, H₂PO₄⁻, etc.)
   - [x] Initialized Git repository, added `.gitignore`, and synced to GitHub (`https://github.com/mumanoha/terrascan`)
+- [x] **Part 4, Step 8: Cloud Run Public Deployment**
+  - [x] Containerized Docsify portal with alpine Nginx dynamic templating on `$PORT`
+  - [x] Deployed service `terrascan` to Google Cloud Run in `us-central1` with `--allow-unauthenticated`
+  - [x] Verified live public HTTPS documentation portal: [https://terrascan-795926523320.us-central1.run.app](https://terrascan-795926523320.us-central1.run.app)
