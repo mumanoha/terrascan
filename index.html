@@ -13,11 +13,12 @@
       --theme-color: #2e7d32;
     }
     .sidebar {
-      font-size: 14.5px;
+      font-size: 14px;
       line-height: 1.6;
     }
     .markdown-section {
-      max-width: 900px;
+      max-width: 920px;
+      padding: 30px 40px;
     }
     .sidebar-nav strong {
       color: #2e7d32;
@@ -26,6 +27,16 @@
       letter-spacing: 0.5px;
       display: block;
       margin-top: 15px;
+    }
+    mjx-container {
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-width: 100%;
+    }
+    table {
+      display: table !important;
+      width: 100% !important;
+      margin-bottom: 1.5rem;
     }
   </style>
 </head>
@@ -36,6 +47,9 @@
       name: '🌱 TerraScan v2',
       repo: 'https://github.com/mumanoha/terrascan',
       loadSidebar: true,
+      alias: {
+        '/.*/_sidebar.md': '/_sidebar.md'
+      },
       subMaxLevel: 3,
       auto2top: true,
       homepage: 'README.md',
@@ -50,14 +64,34 @@
         buttonText: 'Copy',
         errorText: 'Error',
         successText: 'Copied'
+      },
+      latex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
       }
     }
   </script>
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script src="//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-latex@0"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/index.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-markdown.min.js"></script>
 </body>
 </html>

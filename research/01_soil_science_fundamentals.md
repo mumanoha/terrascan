@@ -50,10 +50,17 @@ Nitrogen in agricultural soils is governed primarily by microbial biological tra
   - Over 95% of total soil nitrogen is bound within Soil Organic Matter (SOM) in the form of amino acids, amino sugars, peptides, proteins, and recalcitrant heterocyclic nitrogen (e.g., pyrroles, pyridines) condensed into humic complexes.
   - Typical Total Nitrogen (TN) concentrations in agricultural topsoils range from **0.8 to 4.0 g/kg (800 to 4,000 mg/kg)**.
 - **Inorganic Labile Pool (<5% of Total N)**:
-  - Ammonium (NH₄⁺): Generated via biological ammonification/mineralization ($\text{R-NH}_2 + \text{H}_2\text{O} \rightarrow \text{NH}_3 + \text{R-OH}$; $\text{NH}_3 + \text{H}^+ \leftrightarrow \text{NH}_4^+$). Because it is a positively charged cation, NH₄⁺ is electrostatically retained on the negatively charged Cation Exchange Capacity (CEC) surfaces of phyllosilicate clay minerals and humic carboxyl/phenolic groups ($-\text{COO}^-, -\text{O}^-$), making it relatively resistant to immediate hydrological leaching.
+  - Ammonium (NH₄⁺): Generated via biological ammonification/mineralization:
+    ```text
+    R-NH₂ + H₂O  ──▶  NH₃ + R-OH
+    NH₃ + H⁺     ⇋   NH₄⁺
+    ```
+    Because it is a positively charged cation, NH₄⁺ is electrostatically retained on the negatively charged Cation Exchange Capacity (CEC) surfaces of phyllosilicate clay minerals and humic carboxyl/phenolic groups (-COO⁻, -O⁻), making it relatively resistant to immediate hydrological leaching.
   - Nitrate (NO₃⁻): Produced via biological two-step nitrification by obligate chemolithoautotrophic bacteria:
-    $$2\text{NH}_4^+ + 3\text{O}_2 \xrightarrow{\textit{Nitrosomonas}} 2\text{NO}_2^- + 2\text{H}_2\text{O} + 4\text{H}^+ + \text{Energy}$$
-    $$2\text{NO}_2^- + \text{O}_2 \xrightarrow{\textit{Nitrobacter}} 2\text{NO}_3^- + \text{Energy}$$
+    ```text
+    Step 1 (Nitrosomonas):  2 NH₄⁺ + 3 O₂  ──▶  2 NO₂⁻ + 2 H₂O + 4 H⁺ + Energy
+    Step 2 (Nitrobacter):   2 NO₂⁻ + O₂    ──▶  2 NO₃⁻ + Energy
+    ```
   - **Mobility Mechanism**: The nitrate anion (NO₃⁻) possesses a net negative charge. Because virtually all agricultural soils in temperate regions (such as Pennsylvania) have an Anion Exchange Capacity (AEC) close to zero, NO₃⁻ is electrostatically repelled from negative soil mineral and organic colloids. Consequently, NO₃⁻ remains fully dissolved in the gravitational pore water, making it extremely mobile. It leaches rapidly through the soil profile into groundwater aquifers during precipitation events or denitrifies into gaseous nitrous oxide (N₂O) and dinitrogen (N₂) under anaerobic saturated conditions.
 
 > 💻 **Computer Science Translation (Nitrogen)**:
@@ -64,8 +71,10 @@ Nitrogen in agricultural soils is governed primarily by microbial biological tra
 #### B. Phosphorus (P): The Fixation Paradox and Surface Immobility
 Phosphorus behavior is dominated by complex inorganic chemical precipitation-dissolution and surface chemisorption equilibria (Sharpley et al., 2001; Pierzynski et al., 2005):
 - **Total Soil Phosphorus (TP)**: Ranges from **200 to 1,500 mg/kg**, but generally **less than 0.1% to 1.0%** of this total is readily available for plant root uptake at any given moment.
-- **Solution Orthophosphate**: Plant roots absorb phosphorus exclusively as dissolved inorganic orthophosphate ions. The speciation of orthophosphate is strictly governed by soil solution pH according to diprotic/triprotic acid-base dissociation:
-  $$\text{H}_3\text{PO}_4 \xrightleftharpoons{pK_{a1}=2.15} \text{H}_2\text{PO}_4^- \xrightleftharpoons{pK_{a2}=7.20} \text{HPO}_4^{2-} \xrightleftharpoons{pK_{a3}=12.35} \text{PO}_4^{3-}$$
+- **Solution Orthophosphate**: Plant roots absorb phosphorus exclusively as dissolved inorganic orthophosphate ions. The speciation of orthophosphate is strictly governed by soil solution pH:
+  ```text
+  H₃PO₄  ⇋  H₂PO₄⁻ (dominant at pH < 7.2)  ⇋  HPO₄²⁻ (dominant at pH > 7.2)  ⇋  PO₄³⁻
+  ```
   In standard agricultural soils (pH 5.5–7.5), the bioavailable species are **dihydrogen phosphate (H₂PO₄⁻)** (dominant at pH < 7.2) and **hydrogen phosphate (HPO₄²⁻) (dominant at pH > 7.2)**.
 - **Fixation & Geochemical Sinks**:
   - *Acidic Soils (pH < 6.0)*: Orthophosphate rapidly undergoes specific inner-sphere ligand exchange chemisorption onto the hydroxylated surfaces of iron (Fe³⁺) and aluminum (Al³⁺) oxyhydroxides (e.g., goethite α-FeOOH, hematite α-Fe₂O₃, gibbsite Al(OH)₃). Over time, solid-state diffusion locks phosphorus into highly insoluble secondary phosphate minerals such as **strengite (FePO₄·2H₂O)** and **variscite (AlPO₄·2H₂O)** ($K_{sp} \approx 10^{-21}$ to $10^{-22}$).
@@ -85,13 +94,15 @@ Potassium exists entirely in inorganic states as the monovalent cation **K⁺**;
   - Total K is large (**10,000 to 25,000 mg/kg**, or 1%–2.5% of total soil mass), but this structural pool is released only through geological chemical weathering over decades to centuries.
 - **2. Fixed / Non-Exchangeable K (1%–10% of Total K)**:
   - Resides within the non-hydrated interlayer spaces of 2:1 expanding and partially weathered clay minerals, particularly **illite (hydrous mica)** and **vermiculite**.
-  - The unhydrated ionic radius of K⁺ ($1.38 \text{ \AA}$) fits into the hexagonal cavities ($1.40 \text{ \AA}$ diameter) formed by oxygen atoms in adjoining silica tetrahedral sheets. When the clay dries, the sheets contract and collapse around the K⁺ ions, trapping them electrostatically so they cannot be displaced by ordinary neutral salt solutions. Fixed K acts as a slow-release reservoir that buffers exchangeable K.
+  - The unhydrated ionic radius of K⁺ (1.38 Å) fits into the hexagonal cavities (1.40 Å diameter) formed by oxygen atoms in adjoining silica tetrahedral sheets. When the clay dries, the sheets contract and collapse around the K⁺ ions, trapping them electrostatically so they cannot be displaced by ordinary neutral salt solutions. Fixed K acts as a slow-release reservoir that buffers exchangeable K.
 - **3. Exchangeable K (1%–2% of Total K)**:
   - Represents the primary agronomic plant-available fraction measured in soil testing (**80 to 500+ mg/kg**).
   - Hydrated K⁺ ions are electrostatically held on outer planar and edge surface negative charges of clay minerals and humic colloids. They exist in dynamic equilibrium with the soil solution and are readily displaced by other cations (Ca²⁺, Mg²⁺, NH₄⁺) through rapid reversible cation exchange according to the Gapon equation:
-    $$\frac{[\text{K}^+]_{\text{exch}}}{[\text{Ca}^{2+} + \text{Mg}^{2+}]_{\text{exch}}^{1/2}} = k_G \frac{[\text{K}^+]_{\text{sol}}}{[\text{Ca}^{2+} + \text{Mg}^{2+}]_{\text{sol}}^{1/2}}$$
+    ```text
+    [K⁺]_exch / ([Ca²⁺] + [Mg²⁺])_exch^(1/2)  =  k_G × [K⁺]_sol / ([Ca²⁺] + [Mg²⁺])_sol^(1/2)
+    ```
 - **4. Solution K (0.1%–0.2% of Total K)**:
-  - Free K⁺ ions dissolved in soil pore water (**2 to 20 mg/L**). Plant roots absorb K⁺ from this solution via high-affinity active transport membrane proteins ($HAK/KUP/KT$ transporters).
+  - Free K⁺ ions dissolved in soil pore water (**2 to 20 mg/L**). Plant roots absorb K⁺ from this solution via high-affinity active transport membrane proteins (HAK/KUP/KT transporters).
 
 > 💻 **Computer Science Translation (Potassium)**:
 > - **Data Structure**: A **raw primitive integer without pointers** (`int K = 19;`).
