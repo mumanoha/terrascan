@@ -12,8 +12,9 @@
 * **Step 3: Machine Learning**
   * [03. PINN vs. FNO Architectures](research/03_ml_architectures_pinn_fno.md)
   * [04. Uncertainty Quantification](research/04_uncertainty_quantification.md)
-  * [Baseline Benchmark Model](models/baselines/train_baselines.py)
-  * [Fourier Neural Operator Model](models/fno_v2/model.py)
+  * [Baseline Benchmark Models](models/baselines/README.md)
+  * [Fourier Neural Operator (FNO)](models/fno_v2/README.md)
+  * [v1 PINN Architecture (Archived)](models/pinn_v1/README.md)
 
 * **Step 4: Rover Hardware**
   * [Robot BOM & Power Budget](hardware/bom.md)
