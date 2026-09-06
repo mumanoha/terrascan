@@ -37,36 +37,14 @@ Big industrial corporate farms with 5,000 acres hire commercial agronomists with
 
 Follow this 6-step roadmap in order to build your understanding from zero to complete expert:
 
-```
-┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                             YOUR STEP-BY-STEP REVIEW ROADMAP                                     │
-├──────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ STEP 1: Start Here! Read this README.md (30 mins)                                               │
-│ • Understand the story, the plain-English glossary, and the judge interview cheat sheet.         │
-├──────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ STEP 2: The Project Audit — research/07_gap_analysis_v1_vs_literature.md (20 mins)             │
-│ • Learn what your v1 PJAS presentation got right, what it got wrong, and why.                    │
-│ • Understand why a uniform "< 5 mg/kg" target was scientifically impossible.                     │
-├──────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ STEP 3: The Science & Remote Sensing — research/01, 02, and 05 (30 mins)                        │
-│ • research/01: How N, P, and K actually exist in dirt (ions vs. organic bonds).                  │
-│ • research/02: How satellites see light (colors, infrared, and why water messes up readings).   │
-│ • research/05: The real Pennsylvania laws (Ag E&S erosion plans vs. Act 38 nutrient plans).     │
-├──────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ STEP 4: The AI & Math Deep Dive — research/03, 04, and models/ (25 mins)                        │
-│ • research/03: Why Fourier Neural Operators (FNO) crush standard neural networks.                │
-│ • research/04: Spatial Block Cross-Validation (preventing cheating) & Conformal Prediction.     │
-│ • Run the code: python3 models/baselines/train_baselines.py & python3 models/fno_v2/model.py    │
-├──────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ STEP 5: The Rover Hardware — hardware/bom.md & hardware/sensor_calibration.md (20 mins)         │
-│ • hardware/bom.md: The realistic $1,482 robot parts list and battery power math.                 │
-│ • hardware/sensor_calibration.md: The full architecture diagram (Mermaid) & calibration cup.    │
-├──────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ STEP 6: The Grand Finale — docs/isef_abstract.md & docs/paper_draft.md (30 mins)                 │
-│ • Read your official 250-word competition abstract.                                              │
-│ • Read the complete research paper draft that ties the entire scientific program together.       │
-└──────────────────────────────────────────────────────────────────────────────────────────────────┘
-```
+| Step & Phase | File to Click & Read | Estimated Time | Key Goal |
+| :--- | :--- | :--- | :--- |
+| **STEP 1: Start Here** | [**README.md**](README.md)<br>• [**CS-to-Chemistry Guide**](knowledge/cs_to_chemistry_guide.md) | 25 mins | Master the big picture, the CS Rosetta Stone, and the Judge Interview Cheat Sheet. |
+| **STEP 2: The Project Audit** | [**research/07_gap_analysis_v1_vs_literature.md**](research/07_gap_analysis_v1_vs_literature.md) | 20 mins | Learn what the v1 PJAS project got right, what it got wrong, and why `< 5 mg/kg` error was impossible. |
+| **STEP 3: Science & Agronomy** | [**research/01_soil_science_fundamentals.md**](research/01_soil_science_fundamentals.md)<br>[**research/02_remote_sensing_spectroscopy.md**](research/02_remote_sensing_spectroscopy.md)<br>[**research/05_agronomy_regulatory_context.md**](research/05_agronomy_regulatory_context.md) | 30 mins | Learn how N, P, K live in dirt, why satellites see vibrating springs, and real PA fertilizer laws. |
+| **STEP 4: AI & Mathematics** | [**research/03_ml_architectures_pinn_fno.md**](research/03_ml_architectures_pinn_fno.md)<br>[**research/04_uncertainty_quantification.md**](research/04_uncertainty_quantification.md)<br>[**models/baselines/train_baselines.py**](models/baselines/train_baselines.py)<br>[**models/fno_v2/model.py**](models/fno_v2/model.py) | 25 mins | Understand why Fourier Neural Operators (FNO) beat MLPs, how Spatial Block-CV stops cheating, and run the models. |
+| **STEP 5: Rover Hardware** | [**hardware/bom.md**](hardware/bom.md)<br>[**hardware/sensor_calibration.md**](hardware/sensor_calibration.md) | 20 mins | See the $1,482 robot parts list, the battery runtime math, and the active calibration contact probe. |
+| **STEP 6: Competition Deliverables** | [**docs/isef_abstract.md**](docs/isef_abstract.md)<br>[**docs/paper_draft.md**](docs/paper_draft.md)<br>[**research/06_competing_solutions_landscape.md**](research/06_competing_solutions_landscape.md) | 30 mins | Read your official 247-word ISEF abstract, the full research paper draft, and the commercial benchmark. |
 
 ---
 
