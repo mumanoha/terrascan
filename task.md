@@ -45,3 +45,6 @@ Elevate TerraScan from a Grade 9 PJAS science fair presentation to an ISEF / Reg
   - [x] CS-First Translation Rule in `AGENTS.md` (Rule 7)
   - [x] Quick-Lookup Rosetta Stone in `README.md`
   - [x] Inline CS translation callout blocks in `knowledge/soil_nutrient_domain.md` and `research/01_soil_science_fundamentals.md`
+- [x] **Part 4, Step 7: Universal Markdown Rendering & Remote Git Sync**
+  - [x] Standardized chemical rendering across all 14 markdown files using clean, universal Unicode (NH₄⁺, NO₃⁻, K⁺, H₂PO₄⁻, etc.)
+  - [x] Initialized Git repository, added `.gitignore`, and synced to GitHub (`https://github.com/mumanoha/terrascan`)

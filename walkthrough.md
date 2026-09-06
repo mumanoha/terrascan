@@ -44,3 +44,12 @@
   2. [AGENTS.md](file:///Users/muthumano/Documents/WORK/code/personal_projects/terrascan_project/AGENTS.md): Codified Rule 7 ("CS-First Translation Rule") mandating CS mental models and translation callout boxes for all chemistry concepts going forward.
   3. [README.md](file:///Users/muthumano/Documents/WORK/code/personal_projects/terrascan_project/README.md): Integrated the CS Rosetta Stone quick-lookup table and guide links directly into the student navigation hub.
   4. [knowledge/soil_nutrient_domain.md](file:///Users/muthumano/Documents/WORK/code/personal_projects/terrascan_project/knowledge/soil_nutrient_domain.md) & [research/01_soil_science_fundamentals.md](file:///Users/muthumano/Documents/WORK/code/personal_projects/terrascan_project/research/01_soil_science_fundamentals.md): Embedded inline `💻 Computer Science Translation` callout blocks alongside every major chemical property (N, P, K, CEC, Depth Stratification, Lab Extractions).
+
+### Step 7: Universal Markdown Rendering & Remote Git Sync (Completed)
+- **Problem Addressed**:
+  1. LaTeX chemistry syntax (e.g., `$\text{NH}_4^+$`) was failing to render properly in standard markdown viewers, appearing as raw backslashes and braces.
+  2. The researcher needed remote access to the entire project from any device.
+- **Actions Taken**:
+  1. **Chemical Notation Standardization**: Converted all inline chemistry formulas to universal UTF-8 Unicode characters (`NH₄⁺`, `NO₃⁻`, `K⁺`, `H₂PO₄⁻`, `HPO₄²⁻`, `Ca²⁺`, `Mg²⁺`, `Fe³⁺`, `Al³⁺`, `N-H`, `C-H`, `P-O`, `pH`, `µm`, etc.) across 14 markdown files. Equations and chemical formulas now render legibly and natively on all platforms without requiring LaTeX/MathJax plugins.
+  2. **Git Repository Setup**: Configured a clean `.gitignore` for Python environments, caches, and system files.
+  3. **GitHub Remote Sync**: Initialized local git tracking and pushed the complete repository to GitHub at [https://github.com/mumanoha/terrascan](https://github.com/mumanoha/terrascan) as a private repository.
