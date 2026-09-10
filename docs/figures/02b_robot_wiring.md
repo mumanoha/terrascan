@@ -2,7 +2,7 @@
 _Last updated: 2026-09-09 · Status: reviewed_
 
 ## TL;DR
-This document provides the production-grade electrical and interconnect wiring schematic for the TerraBot v2 autonomous field rover. Operating from a 12.8V 20Ah ($256\text{ Wh}$) LiFePO4 battery recharged by a 50W semi-flexible solar panel via MPPT, the system employs multi-stage synchronous buck converters and an ultra-low-noise LDO to provide clean, isolated power rails (12.8V, 5.1V, 5.0V, and 3.3V). The Raspberry Pi 5 and Hailo-8L NPU communicate deterministically with sensors and actuators across dedicated I2C, SPI, UART, and RS-485 Modbus buses. Inductive motor noise is strictly isolated from sensitive optical photodiodes using an air-gapped star-ground topology, optocouplers, TVS clamp diodes, and LC filters.
+This document provides the production-grade electrical and interconnect wiring schematic for the TerraBot v2 autonomous field rover. Operating from a 12.8V 20Ah (256 Wh) LiFePO4 battery recharged by a 50W semi-flexible solar panel via MPPT, the system employs multi-stage synchronous buck converters and an ultra-low-noise LDO to provide clean, isolated power rails (12.8V, 5.1V, 5.0V, and 3.3V). The Raspberry Pi 5 and Hailo-8L NPU communicate deterministically with sensors and actuators across dedicated I2C, SPI, UART, and RS-485 Modbus buses. Inductive motor noise is strictly isolated from sensitive optical photodiodes using an air-gapped star-ground topology, optocouplers, TVS clamp diodes, and LC filters.
 
 ---
 
@@ -11,7 +11,7 @@ This document provides the production-grade electrical and interconnect wiring s
 2. How is raw 12.8V battery power safely stepped down, regulated, and protected against reverse polarity, overcurrent faults, and inductive voltage spikes?
 3. What is the rigorous component-by-component electrical power budget, and what is the exact mathematical runtime on a 256 Wh LiFePO4 battery under zero-solar and solar-recharged conditions?
 4. How do we eliminate electromagnetic interference (EMI) and ground loops so the 15A motor switching noise does not corrupt the micro-amp photocurrents of the AS7265x 18-channel spectral sensor?
-5. Why was the original PJAS $485 hardware estimate unviable, and what is the true itemized 2026 component cost ($1,481.80)?
+5. Why was the original PJAS \$485 hardware estimate unviable, and what is the true itemized 2026 component cost (\$1,481.80)?
 
 ---
 
