@@ -1,5 +1,6 @@
 * [🏠 Master Guide (Home)](README.md)
 * [📊 Executive System Overview](docs/figures/01_system_overview.md)
+* [☁️ GCP Cloud Architecture](docs/figures/03_gcp_technical_architecture.md)
 * [🤖 Rover Mechanical Architecture](docs/figures/02a_robot_cad_concept.md)
 * [⚡ Rover Electrical Wiring](docs/figures/02b_robot_wiring.md)
 * [💻 CS-to-Chemistry Guide](knowledge/cs_to_chemistry_guide.md)
@@ -27,6 +28,7 @@
 
 * **Step 5: Papers & Deliverables**
   * [Executive System Overview](docs/figures/01_system_overview.md)
+  * [GCP Cloud Architecture](docs/figures/03_gcp_technical_architecture.md)
   * [Rover Mechanical Architecture](docs/figures/02a_robot_cad_concept.md)
   * [Rover Electrical Wiring](docs/figures/02b_robot_wiring.md)
   * [Official ISEF Abstract](docs/isef_abstract.md)

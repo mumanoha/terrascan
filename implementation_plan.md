@@ -23,14 +23,19 @@
 - Completed `research/03_ml_architectures_pinn_fno.md`, `research/04_uncertainty_quantification.md`.
 - Trained and verified `models/baselines/` and `models/fno_v2/`.
 
-### Phase 5: Step 4 — Rover Hardware & Physical Schematics (ACTIVE)
+### Phase 5: Step 4 — Rover Hardware & Physical Schematics (COMPLETED)
 - **Completed**:
   1. `hardware/bom.md`: Full 2026 BOM ($1,482) and power runtime analysis.
   2. `hardware/sensor_calibration.md`: 4-step optical standardization protocol.
   3. `docs/figures/02a_robot_cad_concept.md` & `.svg`: 3-view orthographic CAD blueprint, slope stability physics, 520 mm chassis packaging, and EPDM light-shield skirt.
-- **Active Task**:
-  4. `docs/figures/02b_robot_wiring.md` & `02b_robot_wiring.svg`: Complete internal electronics wiring diagram, pin-to-pin interconnects, voltage regulation, protection circuitry (fuses, TVS, flyback, reverse-polarity MOSFET), star-ground topology, power budget derivation, EMI mitigation, and updated 2026 BOM.
+  4. `docs/figures/02b_robot_wiring.md` & `.svg`: Complete internal electronics wiring diagram, pin-to-pin interconnects, voltage regulation, protection circuitry (fuses, TVS, flyback, reverse-polarity MOSFET), star-ground topology, power budget derivation, EMI mitigation, and updated 2026 BOM.
 
-### Phase 6: Step 5 — Research Synthesis & Deliverables (COMPLETED / ACTIVE)
-- Completed `docs/figures/01_system_overview.md`, `docs/isef_abstract.md`, `docs/paper_draft.md`, `research/06_competing_solutions_landscape.md`.
-- Deployed on Google Cloud Run and GitHub Pages.
+### Phase 6: Step 5 — Cloud Systems Architecture & Synthesis (COMPLETED)
+- **Completed Deliverables**:
+  1. `docs/figures/03_gcp_technical_architecture.md`: Complete GCP end-to-end technical architecture diagram (Mermaid flowchart with subgraphs per GCP product boundary), store-and-forward rural buffering pattern, modern BigQuery-backed Feature Store justification, Cloud Run vs GKE/App Engine analysis, estimated GCP monthly cost driver table ($75.00/mo pilot), and PII agricultural data governance.
+  2. `docs/figures/01_system_overview.md`: Executive 5-stage overview diagram.
+  3. `docs/isef_abstract.md`: Official 247-word ISEF / Regeneron STS competition abstract.
+  4. `docs/paper_draft.md`: Complete publication-grade scientific manuscript.
+  5. `research/06_competing_solutions_landscape.md`: Commercial benchmark of digital soil mapping platforms.
+  6. Multi-region public deployment on Google Cloud Run and GitHub Pages.
+
