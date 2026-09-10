@@ -79,3 +79,13 @@
   5. **GitHub Visibility**: Converted GitHub repository [https://github.com/mumanoha/terrascan](https://github.com/mumanoha/terrascan) to **PUBLIC** and verified GitHub Pages at [https://mumanoha.github.io/terrascan/](https://mumanoha.github.io/terrascan/).
   6. **Automated Headless Chrome E2E Verification**: Tested rendering of `07_gap_analysis_v1_vs_literature` and `01_soil_science_fundamentals` directly on Google Cloud Run revision `terrascan-00003-mzb` using Headless Google Chrome, confirming 100% clean sidebar navigation, zero "Loading..." text, and perfect chemical reaction formatting.
 
+### Step 10: Executive System Overview Architecture Diagram (Completed)
+- **Deliverable**: [docs/figures/01_system_overview.md](file:///Users/muthumano/Documents/WORK/code/personal_projects/terrascan_project/docs/figures/01_system_overview.md)
+- **Purpose**: Crafted a 30-second executive flowchart designed for judges, mentors, and non-technical stakeholders, summarizing the entire TerraScan v2 solution in exactly 5 distinct stages across 11 clean functional blocks.
+- **Key Design Features**:
+  1. **5 Grouped Stages**: (1) Field Data Collection, (2) Edge Processing, (3) Cloud Ingestion & AI, (4) Results & Uncertainty, (5) Farmer-Facing Outcome.
+  2. **Readable Top-to-Bottom Flow**: Optimized visual layout avoiding horizontal stretching, ensuring large, legible typography and labelled data flows on mobile, desktop, and print posters.
+  3. **Executive Color Palette**: Exactly 5 harmonious theme colors with a complete stage legend table.
+  4. **Native Mermaid Integration**: Integrated `mermaid.js` and `docsify-mermaid.js` into `index.html`, verified dynamically on Google Cloud Run revision `terrascan-00004-rjx`.
+
+
