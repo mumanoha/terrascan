@@ -1,0 +1,630 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 960" width="100%" height="auto" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; border: 1px solid #E2E8F0; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+  <defs>
+    <!-- Technical grid pattern -->
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#F1F5F9" stroke-width="1"/>
+    </pattern>
+    <!-- Arrow markers -->
+    <marker id="arr-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#DC2626"/>
+    </marker>
+    <marker id="arr-amber" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#D97706"/>
+    </marker>
+    <marker id="arr-purple" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#7C3AED"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#2563EB"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10B981"/>
+    </marker>
+  </defs>
+
+  <!-- Background Grid -->
+  <rect width="100%" height="100%" fill="url(#grid)" />
+
+  <!-- Outer Technical Border -->
+  <rect x="15" y="15" width="1170" height="930" rx="8" fill="none" stroke="#CBD5E1" stroke-width="1.5"/>
+  <rect x="20" y="20" width="1160" height="920" rx="6" fill="none" stroke="#E2E8F0" stroke-width="1"/>
+
+  <!-- TITLE BLOCK (Bottom Right) -->
+  <g transform="translate(800, 830)">
+    <rect x="0" y="0" width="370" height="100" rx="4" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.5"/>
+    <line x1="0" y1="30" x2="370" y2="30" stroke="#CBD5E1" stroke-width="1"/>
+    <line x1="0" y1="65" x2="370" y2="65" stroke="#CBD5E1" stroke-width="1"/>
+    <line x1="190" y1="30" x2="190" y2="100" stroke="#CBD5E1" stroke-width="1"/>
+    
+    <text x="12" y="20" font-size="12" font-weight="bold" fill="#0F172A">TERRABOT v2 ELECTRICAL &amp; INTERCONNECT SCHEMATIC</text>
+    <text x="12" y="47" font-size="10.5" fill="#64748B">DRAWING NO: <tspan font-weight="bold" fill="#334155">TB-ELEC-2026-02B</tspan></text>
+    <text x="12" y="60" font-size="10.5" fill="#64748B">COMPUTE: <tspan font-weight="bold" fill="#334155">RPi 5 (8GB) + Hailo-8L</tspan></text>
+    <text x="205" y="47" font-size="10.5" fill="#64748B">BATTERY: <tspan font-weight="bold" fill="#334155">12.8V 20Ah LiFePO4</tspan></text>
+    <text x="205" y="60" font-size="10.5" fill="#64748B">MAX DRAIN: <tspan font-weight="bold" fill="#334155">38.5 W (25.9 W avg)</tspan></text>
+    <text x="12" y="85" font-size="10.5" fill="#64748B">STAR GROUND: <tspan font-weight="bold" fill="#16A34A">SEPARATED LOGIC/PWR</tspan></text>
+    <text x="205" y="85" font-size="10.5" fill="#64748B">STATUS: <tspan font-weight="bold" fill="#16A34A">VERIFIED FOR BUILD</tspan></text>
+  </g>
+
+  <!-- BUS LEGEND (Top Left) -->
+  <g transform="translate(35, 30)">
+    <rect x="0" y="0" width="410" height="42" rx="4" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+    <!-- Red: 12.8V -->
+    <line x1="12" y1="14" x2="32" y2="14" stroke="#DC2626" stroke-width="3"/>
+    <text x="38" y="17" font-size="9.5" font-weight="bold" fill="#DC2626">12.8V Bus</text>
+    <!-- Amber: 5V -->
+    <line x1="95" y1="14" x2="115" y2="14" stroke="#D97706" stroke-width="2.5"/>
+    <text x="120" y="17" font-size="9.5" font-weight="bold" fill="#D97706">5V Bus</text>
+    <!-- Purple: 3.3V -->
+    <line x1="165" y1="14" x2="185" y2="14" stroke="#7C3AED" stroke-width="2"/>
+    <text x="190" y="17" font-size="9.5" font-weight="bold" fill="#7C3AED">3.3V Bus</text>
+    <!-- Green: I2C -->
+    <line x1="240" y1="14" x2="260" y2="14" stroke="#10B981" stroke-width="2"/>
+    <text x="265" y="17" font-size="9.5" font-weight="bold" fill="#10B981">I2C (SDA/SCL)</text>
+    <!-- Blue: UART -->
+    <line x1="335" y1="14" x2="355" y2="14" stroke="#2563EB" stroke-width="2"/>
+    <text x="360" y="17" font-size="9.5" font-weight="bold" fill="#2563EB">UART</text>
+    <!-- Row 2 -->
+    <!-- Orange: SPI -->
+    <line x1="12" y1="32" x2="32" y2="32" stroke="#EA580C" stroke-width="2"/>
+    <text x="38" y="35" font-size="9.5" font-weight="bold" fill="#EA580C">SPI (RFM95W)</text>
+    <!-- Pink: RS485 -->
+    <line x1="105" y1="32" x2="125" y2="32" stroke="#DB2777" stroke-width="2"/>
+    <text x="130" y="35" font-size="9.5" font-weight="bold" fill="#DB2777">RS-485 (A/B)</text>
+    <!-- Black: GND_PWR -->
+    <line x1="205" y1="32" x2="225" y2="32" stroke="#1E293B" stroke-width="2" stroke-dasharray="4,2"/>
+    <text x="230" y="35" font-size="9.5" font-weight="bold" fill="#1E293B">GND_PWR (Dirty)</text>
+    <!-- Green: GND_LOGIC -->
+    <line x1="315" y1="32" x2="335" y2="32" stroke="#059669" stroke-width="2"/>
+    <text x="340" y="35" font-size="9.5" font-weight="bold" fill="#059669">GND_LOGIC (Clean)</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 1. POWER SUBSYSTEM (Left Column)                                          -->
+  <!-- ========================================================================= -->
+
+  <!-- Solar Panel 50W -->
+  <g transform="translate(35, 90)">
+    <rect x="0" y="0" width="130" height="75" rx="5" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
+    <text x="10" y="20" font-size="11" font-weight="bold" fill="#1E40AF">50W Solar Panel</text>
+    <text x="10" y="34" font-size="9.5" fill="#64748B">Vmp=18.2V, Imp=2.75A</text>
+    <text x="10" y="47" font-size="9" fill="#94A3B8">Semi-flexible Monocryst.</text>
+    <!-- Terminals -->
+    <circle cx="25" cy="63" r="5" fill="#DC2626"/>
+    <text x="35" y="66" font-size="10" font-weight="bold" fill="#DC2626">PV+</text>
+    <circle cx="85" cy="63" r="5" fill="#1E293B"/>
+    <text x="95" y="66" font-size="10" font-weight="bold" fill="#1E293B">PV-</text>
+  </g>
+
+  <!-- MPPT Solar Charge Controller -->
+  <g transform="translate(200, 90)">
+    <rect x="0" y="0" width="145" height="75" rx="5" fill="#FEFCE8" stroke="#EAB308" stroke-width="1.5"/>
+    <text x="10" y="18" font-size="11" font-weight="bold" fill="#854D0E">MPPT Controller</text>
+    <text x="10" y="32" font-size="9" fill="#64748B">Genasun GV-5-Li-14.2V</text>
+    <text x="10" y="44" font-size="8.5" fill="#A16207">92% Tracking Efficiency</text>
+    <!-- Pins -->
+    <rect x="5" y="52" width="22" height="15" rx="2" fill="#E2E8F0"/>
+    <text x="7" y="63" font-size="8" font-weight="bold" fill="#DC2626">PV+</text>
+    <rect x="32" y="52" width="22" height="15" rx="2" fill="#E2E8F0"/>
+    <text x="35" y="63" font-size="8" font-weight="bold" fill="#1E293B">PV-</text>
+    <rect x="75" y="52" width="28" height="15" rx="2" fill="#E2E8F0"/>
+    <text x="77" y="63" font-size="8" font-weight="bold" fill="#DC2626">BAT+</text>
+    <rect x="108" y="52" width="28" height="15" rx="2" fill="#E2E8F0"/>
+    <text x="110" y="63" font-size="8" font-weight="bold" fill="#1E293B">BAT-</text>
+  </g>
+
+  <!-- Wiring PV -> MPPT -->
+  <path d="M 60 153 L 60 180 L 216 180 L 216 167" fill="none" stroke="#DC2626" stroke-width="2"/>
+  <path d="M 120 153 L 120 172 L 243 172 L 243 167" fill="none" stroke="#1E293B" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+  <!-- LiFePO4 Battery 12.8V 20Ah -->
+  <g transform="translate(35, 205)">
+    <rect x="0" y="0" width="140" height="90" rx="6" fill="#F8FAFC" stroke="#475569" stroke-width="2"/>
+    <rect x="10" y="8" width="120" height="18" rx="3" fill="#334155"/>
+    <text x="18" y="21" font-size="10.5" font-weight="bold" fill="#FFFFFF">12.8V 20Ah LiFePO4</text>
+    <text x="12" y="42" font-size="9" fill="#64748B">Total Energy: 256 Wh</text>
+    <text x="12" y="55" font-size="9" fill="#16A34A">Max Cont. Discharge: 20A</text>
+    <!-- Terminals -->
+    <rect x="15" y="65" width="24" height="18" rx="2" fill="#DC2626"/>
+    <text x="21" y="78" font-size="10" font-weight="bold" fill="#FFFFFF">B+</text>
+    <rect x="95" y="65" width="24" height="18" rx="2" fill="#1E293B"/>
+    <text x="102" y="78" font-size="10" font-weight="bold" fill="#FFFFFF">B-</text>
+  </g>
+
+  <!-- Wiring MPPT Bat -> Battery -->
+  <path d="M 289 167 L 289 195 L 45 195 L 45 270" fill="none" stroke="#DC2626" stroke-width="2"/>
+  <path d="M 322 167 L 322 200 L 115 200 L 115 265" fill="none" stroke="#1E293B" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+  <!-- Master Protection & Fuse Block -->
+  <g transform="translate(205, 215)">
+    <rect x="0" y="0" width="165" height="110" rx="5" fill="#FFF1F2" stroke="#F43F5E" stroke-width="1.5"/>
+    <text x="10" y="16" font-size="10.5" font-weight="bold" fill="#9F1239">Protection &amp; E-Stop Block</text>
+    
+    <!-- Main 15A Fuse -->
+    <rect x="10" y="26" width="60" height="24" rx="3" fill="#FEE2E2" stroke="#EF4444"/>
+    <text x="15" y="42" font-size="9" font-weight="bold" fill="#B91C1C">FUSE 15A</text>
+    <text x="15" y="60" font-size="8" fill="#64748B">ATC Blade</text>
+
+    <!-- Master E-Stop Switch -->
+    <circle cx="115" cy="38" r="14" fill="#DC2626" stroke="#991B1B" stroke-width="2"/>
+    <text x="105" y="42" font-size="8.5" font-weight="bold" fill="#FFFFFF">E-STOP</text>
+    <text x="95" y="62" font-size="8" fill="#64748B">20A SPST</text>
+
+    <!-- Reverse Polarity Protection (P-MOSFET IRF4905) -->
+    <rect x="10" y="70" width="145" height="32" rx="3" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text x="16" y="84" font-size="8.5" font-weight="bold" fill="#0F172A">Ideal Diode (P-MOSFET IRF4905)</text>
+    <text x="16" y="95" font-size="7.5" fill="#64748B">Rds=0.02Ω, Vdrop=0.04V, 12V Zener Gate Clamp</text>
+  </g>
+
+  <!-- Wire Battery B+ to Fuse & Switch -->
+  <path d="M 50 283 L 50 310 L 190 310 L 190 240 L 215 240" fill="none" stroke="#DC2626" stroke-width="2.5"/>
+
+  <!-- STAR GROUND NODE (Crucial!) -->
+  <g transform="translate(60, 335)">
+    <circle cx="20" cy="20" r="12" fill="#0F172A" stroke="#475569" stroke-width="2"/>
+    <text x="12" y="24" font-size="9" font-weight="bold" fill="#FFFFFF">SG</text>
+    <text x="40" y="16" font-size="11" font-weight="bold" fill="#0F172A">SYSTEM STAR GROUND</text>
+    <text x="40" y="29" font-size="8.5" fill="#64748B">Single chassis bolt at negative battery terminal</text>
+  </g>
+  <!-- Wire Battery B- to Star Ground -->
+  <path d="M 107 283 L 107 335 L 80 335 L 80 355" fill="none" stroke="#1E293B" stroke-width="2.5" stroke-dasharray="4,2"/>
+
+  <!-- ========================================================================= -->
+  <!-- 2. VOLTAGE REGULATION & DC-DC CONVERTERS                                 -->
+  <!-- ========================================================================= -->
+
+  <!-- 5V 5A Primary Buck (for Pi 5 + Hailo NPU) -->
+  <g transform="translate(35, 400)">
+    <rect x="0" y="0" width="160" height="70" rx="5" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+    <text x="10" y="16" font-size="10.5" font-weight="bold" fill="#92400E">5V 5A Buck Converter</text>
+    <text x="10" y="28" font-size="8.5" fill="#B45309">Mean Well / Pololu D36V50F5</text>
+    <text x="10" y="40" font-size="8" fill="#64748B">Eff: 92%, Vin: 7-36V, Vout: 5.1V</text>
+    <!-- Pins -->
+    <rect x="10" y="48" width="25" height="15" rx="2" fill="#FDE68A"/>
+    <text x="12" y="59" font-size="8" font-weight="bold" fill="#DC2626">12V IN</text>
+    <rect x="42" y="48" width="25" height="15" rx="2" fill="#FDE68A"/>
+    <text x="46" y="59" font-size="8" font-weight="bold" fill="#1E293B">GND</text>
+    <rect x="105" y="48" width="45" height="15" rx="2" fill="#FDE68A"/>
+    <text x="107" y="59" font-size="8" font-weight="bold" fill="#D97706">5.1V / 5A</text>
+  </g>
+
+  <!-- 5V 3A Aux Buck (for RTK GNSS & Servos) -->
+  <g transform="translate(210, 400)">
+    <rect x="0" y="0" width="160" height="70" rx="5" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+    <text x="10" y="16" font-size="10.5" font-weight="bold" fill="#92400E">5V 3A Aux Buck</text>
+    <text x="10" y="28" font-size="8.5" fill="#B45309">Pololu D24V22F5</text>
+    <text x="10" y="40" font-size="8" fill="#64748B">Powers RTK GPS, Servos, Logic</text>
+    <!-- Pins -->
+    <rect x="10" y="48" width="25" height="15" rx="2" fill="#FDE68A"/>
+    <text x="12" y="59" font-size="8" font-weight="bold" fill="#DC2626">12V IN</text>
+    <rect x="42" y="48" width="25" height="15" rx="2" fill="#FDE68A"/>
+    <text x="46" y="59" font-size="8" font-weight="bold" fill="#1E293B">GND</text>
+    <rect x="105" y="48" width="45" height="15" rx="2" fill="#FDE68A"/>
+    <text x="108" y="59" font-size="8" font-weight="bold" fill="#D97706">5.0V / 3A</text>
+  </g>
+
+  <!-- 3.3V Ultra-Low-Noise LDO (Dedicated to AS7265x Spectral Sensor!) -->
+  <g transform="translate(125, 495)">
+    <rect x="0" y="0" width="165" height="65" rx="5" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1.5"/>
+    <text x="10" y="16" font-size="10" font-weight="bold" fill="#5B21B6">3.3V Ultra-Low-Noise LDO</text>
+    <text x="10" y="28" font-size="8.5" fill="#7C3AED">TI LP5907 / TPS7A4700 (&lt;4µV RMS)</text>
+    <text x="10" y="40" font-size="7.5" fill="#64748B">Dedicated clean rail for Spectral Triad</text>
+    <!-- Pins -->
+    <rect x="10" y="45" width="28" height="14" rx="2" fill="#DDD6FE"/>
+    <text x="13" y="55" font-size="8" font-weight="bold" fill="#D97706">5V IN</text>
+    <rect x="45" y="45" width="25" height="14" rx="2" fill="#DDD6FE"/>
+    <text x="47" y="55" font-size="8" font-weight="bold" fill="#059669">GND_L</text>
+    <rect x="95" y="45" width="58" height="14" rx="2" fill="#DDD6FE"/>
+    <text x="98" y="55" font-size="8" font-weight="bold" fill="#7C3AED">3.3V ANALOG</text>
+  </g>
+
+  <!-- Wire 12V Protected Rail into Buck Converters -->
+  <path d="M 370 280 L 390 280 L 390 380 L 45 380 L 45 448" fill="none" stroke="#DC2626" stroke-width="2"/>
+  <path d="M 390 380 L 220 380 L 220 448" fill="none" stroke="#DC2626" stroke-width="2"/>
+
+  <!-- ========================================================================= -->
+  <!-- 3. CENTRAL COMPUTE & GPIO HEADER (Center Column)                          -->
+  <!-- ========================================================================= -->
+
+  <g transform="translate(420, 90)">
+    <!-- Pi 5 Enclosure Box -->
+    <rect x="0" y="0" width="360" height="470" rx="8" fill="#F8FAFC" stroke="#0F172A" stroke-width="2"/>
+    
+    <!-- Header Banner -->
+    <rect x="0" y="0" width="360" height="38" rx="8" fill="#1E293B"/>
+    <text x="15" y="24" font-size="13" font-weight="bold" fill="#FFFFFF">RASPBERRY PI 5 (8GB) + HAILO-8L NPU</text>
+    <text x="250" y="24" font-size="10" fill="#94A3B8">26 TOPS AI</text>
+
+    <!-- Sub-info -->
+    <text x="15" y="55" font-size="9.5" fill="#475569">Broadcom BCM2712 Quad-Core A76 @ 2.4GHz · PCIe Gen3 M.2 Hat</text>
+    <text x="15" y="68" font-size="9" fill="#059669">OS: Ubuntu 24.04 LTS / ROS2 Jazzy · HailoRT 4.18 Runtime</text>
+
+    <!-- USB-C PD / 5V In -->
+    <g transform="translate(15, 80)">
+      <rect x="0" y="0" width="90" height="32" rx="4" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.2"/>
+      <text x="8" y="15" font-size="9" font-weight="bold" fill="#B45309">USB-C Power In</text>
+      <text x="8" y="26" font-size="8" fill="#64748B">5.1V @ 5.0A (25W)</text>
+    </g>
+
+    <!-- USB 3.0 / NVMe SSD -->
+    <g transform="translate(120, 80)">
+      <rect x="0" y="0" width="105" height="32" rx="4" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+      <text x="8" y="15" font-size="9" font-weight="bold" fill="#334155">PCIe Gen3 Hat</text>
+      <text x="8" y="26" font-size="8" fill="#64748B">Hailo-8L + 256GB SSD</text>
+    </g>
+
+    <!-- USB 3.0 Port (for RTK GPS backup or Camera) -->
+    <g transform="translate(240, 80)">
+      <rect x="0" y="0" width="105" height="32" rx="4" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.2"/>
+      <text x="8" y="15" font-size="9" font-weight="bold" fill="#1D4ED8">USB 3.0 Ports</text>
+      <text x="8" y="26" font-size="8" fill="#64748B">To Motor Ctrl / USB</text>
+    </g>
+
+    <!-- 40-PIN EXPANSION HEADER (Pinout Diagram) -->
+    <g transform="translate(15, 125)">
+      <rect x="0" y="0" width="330" height="330" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+      <text x="10" y="18" font-size="11" font-weight="bold" fill="#0F172A">40-PIN GPIO HEADER PINOUT &amp; BUS ASSIGNMENT</text>
+      
+      <!-- Pin Columns Header -->
+      <text x="15" y="36" font-size="9" font-weight="bold" fill="#64748B">PIN</text>
+      <text x="45" y="36" font-size="9" font-weight="bold" fill="#64748B">SIGNAL / FUNCTION</text>
+      <text x="180" y="36" font-size="9" font-weight="bold" fill="#64748B">PIN</text>
+      <text x="210" y="36" font-size="9" font-weight="bold" fill="#64748B">SIGNAL / FUNCTION</text>
+      <line x1="5" y1="42" x2="325" y2="42" stroke="#E2E8F0" stroke-width="1"/>
+
+      <!-- Rows -->
+      <!-- Row 1: 3.3V (1) | 5V (2) -->
+      <rect x="8" y="47" width="155" height="18" fill="#F5F3FF" rx="2"/>
+      <text x="12" y="60" font-size="8.5" font-weight="bold" fill="#7C3AED">01</text>
+      <text x="32" y="60" font-size="8.5" fill="#7C3AED">3.3V Power (50mA)</text>
+      <rect x="168" y="47" width="155" height="18" fill="#FEF3C7" rx="2"/>
+      <text x="172" y="60" font-size="8.5" font-weight="bold" fill="#B45309">02</text>
+      <text x="195" y="60" font-size="8.5" font-weight="bold" fill="#B45309">5.0V Power (From Buck)</text>
+
+      <!-- Row 2: GPIO2 I2C1_SDA (3) | 5V (4) -->
+      <rect x="8" y="68" width="155" height="18" fill="#ECFDF5" rx="2"/>
+      <text x="12" y="81" font-size="8.5" font-weight="bold" fill="#059669">03</text>
+      <text x="32" y="81" font-size="8.5" font-weight="bold" fill="#059669">GPIO2 / I2C1_SDA (4.7kΩ)</text>
+      <rect x="168" y="68" width="155" height="18" fill="#FEF3C7" rx="2"/>
+      <text x="172" y="81" font-size="8.5" font-weight="bold" fill="#B45309">04</text>
+      <text x="195" y="81" font-size="8.5" font-weight="bold" fill="#B45309">5.0V Power (From Buck)</text>
+
+      <!-- Row 3: GPIO3 I2C1_SCL (5) | GND (6) -->
+      <rect x="8" y="89" width="155" height="18" fill="#ECFDF5" rx="2"/>
+      <text x="12" y="102" font-size="8.5" font-weight="bold" fill="#059669">05</text>
+      <text x="32" y="102" font-size="8.5" font-weight="bold" fill="#059669">GPIO3 / I2C1_SCL (4.7kΩ)</text>
+      <rect x="168" y="89" width="155" height="18" fill="#F1F5F9" rx="2"/>
+      <text x="172" y="102" font-size="8.5" font-weight="bold" fill="#1E293B">06</text>
+      <text x="195" y="102" font-size="8.5" font-weight="bold" fill="#059669">GND_LOGIC (Clean)</text>
+
+      <!-- Row 4: UART0 TXD (8) | UART0 RXD (10) -->
+      <rect x="168" y="110" width="155" height="18" fill="#EFF6FF" rx="2"/>
+      <text x="172" y="123" font-size="8.5" font-weight="bold" fill="#1D4ED8">08</text>
+      <text x="195" y="123" font-size="8.5" font-weight="bold" fill="#1D4ED8">GPIO14 / UART0_TXD (GPS)</text>
+      <rect x="168" y="131" width="155" height="18" fill="#EFF6FF" rx="2"/>
+      <text x="172" y="144" font-size="8.5" font-weight="bold" fill="#1D4ED8">10</text>
+      <text x="195" y="144" font-size="8.5" font-weight="bold" fill="#1D4ED8">GPIO15 / UART0_RXD (GPS)</text>
+
+      <!-- Row 5: SPI0 (RFM95W LoRa) Pins 19, 21, 23, 24, 22, 18 -->
+      <rect x="8" y="152" width="155" height="18" fill="#FFF7ED" rx="2"/>
+      <text x="12" y="165" font-size="8.5" font-weight="bold" fill="#C2410C">19</text>
+      <text x="32" y="165" font-size="8.5" fill="#C2410C">GPIO10 / SPI0_MOSI</text>
+      <rect x="8" y="173" width="155" height="18" fill="#FFF7ED" rx="2"/>
+      <text x="12" y="186" font-size="8.5" font-weight="bold" fill="#C2410C">21</text>
+      <text x="32" y="186" font-size="8.5" fill="#C2410C">GPIO9  / SPI0_MISO</text>
+      <rect x="8" y="194" width="155" height="18" fill="#FFF7ED" rx="2"/>
+      <text x="12" y="207" font-size="8.5" font-weight="bold" fill="#C2410C">23</text>
+      <text x="32" y="207" font-size="8.5" fill="#C2410C">GPIO11 / SPI0_SCLK</text>
+      <rect x="168" y="194" width="155" height="18" fill="#FFF7ED" rx="2"/>
+      <text x="172" y="207" font-size="8.5" font-weight="bold" fill="#C2410C">24</text>
+      <text x="195" y="207" font-size="8.5" fill="#C2410C">GPIO8  / SPI0_CE0 (NSS)</text>
+
+      <!-- Row 6: Motor PWM & Direction Control -->
+      <rect x="168" y="152" width="155" height="18" fill="#EEF2FF" rx="2"/>
+      <text x="172" y="165" font-size="8.5" font-weight="bold" fill="#4338CA">12</text>
+      <text x="195" y="165" font-size="8.5" font-weight="bold" fill="#4338CA">GPIO18 / PWM0 (Motor L)</text>
+      <rect x="8" y="110" width="155" height="18" fill="#EEF2FF" rx="2"/>
+      <text x="12" y="123" font-size="8.5" font-weight="bold" fill="#4338CA">33</text>
+      <text x="32" y="123" font-size="8.5" font-weight="bold" fill="#4338CA">GPIO13 / PWM1 (Motor R)</text>
+      <rect x="168" y="173" width="155" height="18" fill="#EEF2FF" rx="2"/>
+      <text x="172" y="186" font-size="8.5" font-weight="bold" fill="#4338CA">16</text>
+      <text x="195" y="186" font-size="8.5" fill="#4338CA">GPIO23 / DIR_L (Left Dir)</text>
+      <rect x="168" y="215" width="155" height="18" fill="#EEF2FF" rx="2"/>
+      <text x="172" y="228" font-size="8.5" font-weight="bold" fill="#4338CA">32</text>
+      <text x="195" y="228" font-size="8.5" fill="#4338CA">GPIO12 / DIR_R (Right Dir)</text>
+
+      <!-- Row 7: Halogen & Probe Control -->
+      <rect x="8" y="236" width="155" height="18" fill="#FEF2F2" rx="2"/>
+      <text x="12" y="249" font-size="8.5" font-weight="bold" fill="#B91C1C">13</text>
+      <text x="32" y="249" font-size="8.5" fill="#B91C1C">GPIO27 / Halogen Gate</text>
+      <rect x="8" y="257" width="155" height="18" fill="#FDF2F8" rx="2"/>
+      <text x="12" y="270" font-size="8.5" font-weight="bold" fill="#BE185D">35</text>
+      <text x="32" y="270" font-size="8.5" fill="#BE185D">GPIO19 / UART1_RX (RS485)</text>
+      <rect x="168" y="257" width="155" height="18" fill="#FDF2F8" rx="2"/>
+      <text x="172" y="270" font-size="8.5" font-weight="bold" fill="#BE185D">37</text>
+      <text x="195" y="270" font-size="8.5" fill="#BE185D">GPIO26 / UART1_TX (RS485)</text>
+      <rect x="168" y="236" width="155" height="18" fill="#FDF2F8" rx="2"/>
+      <text x="172" y="249" font-size="8.5" font-weight="bold" fill="#BE185D">38</text>
+      <text x="195" y="249" font-size="8.5" fill="#BE185D">GPIO20 / RS485_DE_RE</text>
+
+      <!-- Row 8: LoRa Interrupt & Reset -->
+      <rect x="8" y="215" width="155" height="18" fill="#FFF7ED" rx="2"/>
+      <text x="12" y="228" font-size="8.5" font-weight="bold" fill="#C2410C">18</text>
+      <text x="32" y="228" font-size="8.5" fill="#C2410C">GPIO24 / LoRa_DIO0 (IRQ)</text>
+      <rect x="8" y="278" width="155" height="18" fill="#FFF7ED" rx="2"/>
+      <text x="12" y="291" font-size="8.5" font-weight="bold" fill="#C2410C">22</text>
+      <text x="32" y="291" font-size="8.5" fill="#C2410C">GPIO25 / LoRa_RESET</text>
+
+      <!-- Row 9: Actuator Trigger -->
+      <rect x="168" y="278" width="155" height="18" fill="#F1F5F9" rx="2"/>
+      <text x="172" y="291" font-size="8.5" font-weight="bold" fill="#475569">11</text>
+      <text x="195" y="291" font-size="8.5" fill="#475569">GPIO17 / Linear Actuator</text>
+
+      <!-- Row 10: Ground Pins -->
+      <rect x="8" y="299" width="315" height="18" fill="#F8FAFC" rx="2"/>
+      <text x="12" y="312" font-size="8.5" fill="#64748B">GND Pins: 06, 09, 14, 20, 25, 30, 34, 39 tied to clean GND_LOGIC plane</text>
+    </g>
+  </g>
+
+  <!-- Wire 5V 5A Buck output to Pi 5 USB-C & Pins 02/04 -->
+  <path d="M 145 448 L 145 425 L 390 425 L 390 190 L 435 190" fill="none" stroke="#D97706" stroke-width="2.5" marker-end="url(#arr-amber)"/>
+
+  <!-- ========================================================================= -->
+  <!-- 4. SENSING & TELEMETRY SUBSYSTEM (Right Column)                           -->
+  <!-- ========================================================================= -->
+
+  <!-- AS7265x 18-Channel Spectral Triad -->
+  <g transform="translate(820, 90)">
+    <rect x="0" y="0" width="330" height="120" rx="6" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.8"/>
+    <rect x="0" y="0" width="330" height="26" rx="6" fill="#6D28D9"/>
+    <text x="12" y="18" font-size="11" font-weight="bold" fill="#FFFFFF">AS7265x 18-CHANNEL SPECTRAL SENSOR TRIAD</text>
+    
+    <text x="12" y="42" font-size="9" fill="#4C1D95">SparkFun Triad (AS72651 + AS72652 + AS72653) · 410–940 nm</text>
+    <text x="12" y="55" font-size="8.5" fill="#64748B">I2C Address: 0x49 · 16-bit ADC · Micro-amp Photocurrents</text>
+
+    <!-- Connectors -->
+    <rect x="12" y="65" width="40" height="20" rx="3" fill="#EDE9FE"/>
+    <text x="16" y="79" font-size="9" font-weight="bold" fill="#7C3AED">3V3</text>
+    <rect x="60" y="65" width="40" height="20" rx="3" fill="#EDE9FE"/>
+    <text x="65" y="79" font-size="9" font-weight="bold" fill="#059669">GND</text>
+    <rect x="110" y="65" width="45" height="20" rx="3" fill="#EDE9FE"/>
+    <text x="115" y="79" font-size="9" font-weight="bold" fill="#059669">SDA</text>
+    <rect x="165" y="65" width="45" height="20" rx="3" fill="#EDE9FE"/>
+    <text x="172" y="79" font-size="9" font-weight="bold" fill="#059669">SCL</text>
+    <rect x="220" y="65" width="95" height="20" rx="3" fill="#EDE9FE"/>
+    <text x="224" y="79" font-size="8" font-weight="bold" fill="#475569">4.7kΩ Pull-Ups to 3V3</text>
+
+    <!-- Shielding callout -->
+    <rect x="12" y="92" width="305" height="20" rx="3" fill="#FEF3C7" stroke="#F59E0B"/>
+    <text x="18" y="105" font-size="8" font-weight="bold" fill="#92400E">SHIELD NOTE: Powered by isolated LDO; twisted-pair shielded I2C cable</text>
+  </g>
+
+  <!-- Wiring LDO 3.3V to AS7265x -->
+  <path d="M 285 540 L 800 540 L 800 165 L 832 165" fill="none" stroke="#7C3AED" stroke-width="2" marker-end="url(#arr-purple)"/>
+
+  <!-- Wiring I2C SDA / SCL from Pi 5 to AS7265x -->
+  <path d="M 580 200 L 790 200 L 790 175 L 935 175" fill="none" stroke="#10B981" stroke-width="2" marker-end="url(#arr-green)"/>
+  <path d="M 580 220 L 785 220 L 785 180 L 990 180" fill="none" stroke="#0D9488" stroke-width="2"/>
+
+  <!-- u-blox ZED-F9P RTK GNSS Receiver -->
+  <g transform="translate(820, 230)">
+    <rect x="0" y="0" width="330" height="110" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.8"/>
+    <rect x="0" y="0" width="330" height="26" rx="6" fill="#1D4ED8"/>
+    <text x="12" y="18" font-size="11" font-weight="bold" fill="#FFFFFF">u-BLOX ZED-F9P DUAL-BAND RTK GNSS</text>
+    
+    <text x="12" y="42" font-size="9" fill="#1E40AF">SparkFun GPS-RTK-SMA · Multi-Band L1/L2/E5b · 1.4 cm CEP Accuracy</text>
+    
+    <!-- Connectors -->
+    <rect x="12" y="52" width="35" height="20" rx="3" fill="#DBEAFE"/>
+    <text x="16" y="66" font-size="9" font-weight="bold" fill="#D97706">5V</text>
+    <rect x="55" y="52" width="35" height="20" rx="3" fill="#DBEAFE"/>
+    <text x="60" y="66" font-size="9" font-weight="bold" fill="#059669">GND</text>
+    <rect x="100" y="52" width="45" height="20" rx="3" fill="#DBEAFE"/>
+    <text x="105" y="66" font-size="8.5" font-weight="bold" fill="#2563EB">RX1 (08)</text>
+    <rect x="155" y="52" width="45" height="20" rx="3" fill="#DBEAFE"/>
+    <text x="160" y="66" font-size="8.5" font-weight="bold" fill="#2563EB">TX1 (10)</text>
+    <rect x="210" y="52" width="105" height="20" rx="3" fill="#DBEAFE"/>
+    <text x="216" y="66" font-size="8.5" font-weight="bold" fill="#1E3A8A">SMA: Multi-Band Ant.</text>
+
+    <!-- RTCM Corrections note -->
+    <text x="12" y="92" font-size="8" fill="#475569">Baud Rate: 460,800 bps · RTCM 3.3 Differential Corrections via LoRaWAN/NTRIP</text>
+    <text x="12" y="102" font-size="8" fill="#16A34A">Active Antenna Phantom Bias: 3.3V internal LDO to SMA core</text>
+  </g>
+
+  <!-- Wiring UART from Pi 5 to ZED-F9P -->
+  <path d="M 740 248 L 795 248 L 795 292 L 925 292" fill="none" stroke="#2563EB" stroke-width="2" marker-end="url(#arr-blue)"/>
+  <path d="M 740 268 L 790 268 L 790 297 L 980 297" fill="none" stroke="#0284C7" stroke-width="2"/>
+
+  <!-- Adafruit RFM95W LoRaWAN Transceiver (915 MHz) -->
+  <g transform="translate(820, 360)">
+    <rect x="0" y="0" width="330" height="105" rx="6" fill="#FFF7ED" stroke="#EA580C" stroke-width="1.8"/>
+    <rect x="0" y="0" width="330" height="26" rx="6" fill="#C2410C"/>
+    <text x="12" y="18" font-size="11" font-weight="bold" fill="#FFFFFF">ADAFRUIT RFM95W LoRaWAN TRANSCEIVER</text>
+    
+    <text x="12" y="42" font-size="9" fill="#9A3412">Semtech SX1276 · 915 MHz (US915) · +20 dBm Output · 10+ km Range</text>
+
+    <!-- Pins -->
+    <rect x="10" y="50" width="30" height="18" rx="2" fill="#FFEDD5"/>
+    <text x="13" y="63" font-size="8" font-weight="bold" fill="#7C3AED">3V3</text>
+    <rect x="45" y="50" width="30" height="18" rx="2" fill="#FFEDD5"/>
+    <text x="48" y="63" font-size="8" font-weight="bold" fill="#059669">GND</text>
+    <rect x="80" y="50" width="32" height="18" rx="2" fill="#FFEDD5"/>
+    <text x="82" y="63" font-size="8" font-weight="bold" fill="#EA580C">MOSI</text>
+    <rect x="117" y="50" width="32" height="18" rx="2" fill="#FFEDD5"/>
+    <text x="120" y="63" font-size="8" font-weight="bold" fill="#EA580C">MISO</text>
+    <rect x="154" y="50" width="28" height="18" rx="2" fill="#FFEDD5"/>
+    <text x="156" y="63" font-size="8" font-weight="bold" fill="#EA580C">SCK</text>
+    <rect x="187" y="50" width="28" height="18" rx="2" fill="#FFEDD5"/>
+    <text x="190" y="63" font-size="8" font-weight="bold" fill="#EA580C">NSS</text>
+    <rect x="220" y="50" width="28" height="18" rx="2" fill="#FFEDD5"/>
+    <text x="223" y="63" font-size="8" font-weight="bold" fill="#EA580C">DIO0</text>
+    <rect x="253" y="50" width="28" height="18" rx="2" fill="#FFEDD5"/>
+    <text x="255" y="63" font-size="8" font-weight="bold" fill="#EA580C">RST</text>
+    <rect x="286" y="50" width="35" height="18" rx="2" fill="#FFEDD5"/>
+    <text x="288" y="63" font-size="8" font-weight="bold" fill="#9A3412">u.FL</text>
+
+    <!-- Decoupling Note -->
+    <text x="12" y="86" font-size="8" fill="#475569">Interface: SPI0 (10 MHz) · Decoupling: 10µF Tantalum + 0.1µF Ceramic at VDD</text>
+    <text x="12" y="97" font-size="8" fill="#C2410C">Function: Transmits FNO soil tensors to cloud &amp; receives RTK base corrections</text>
+  </g>
+
+  <!-- Wiring SPI to LoRa -->
+  <path d="M 580 285 L 810 285 L 810 420 L 830 420" fill="none" stroke="#EA580C" stroke-width="2"/>
+
+  <!-- SP3485 RS-485 Transceiver & TrueSoil TDR-100 Soil Moisture Probe -->
+  <g transform="translate(820, 485)">
+    <rect x="0" y="0" width="330" height="130" rx="6" fill="#FDF2F8" stroke="#DB2777" stroke-width="1.8"/>
+    <rect x="0" y="0" width="330" height="26" rx="6" fill="#BE185D"/>
+    <text x="12" y="18" font-size="11" font-weight="bold" fill="#FFFFFF">RS-485 BUS &amp; TrueSoil TDR-100 SOIL PROBE</text>
+    
+    <!-- SP3485 Chip Box -->
+    <rect x="12" y="36" width="135" height="50" rx="4" fill="#FFFFFF" stroke="#F472B6"/>
+    <text x="18" y="50" font-size="9" font-weight="bold" fill="#9D174D">SP3485 (3.3V RS-485)</text>
+    <text x="18" y="62" font-size="8" fill="#64748B">UART1 RX/TX + DE/RE</text>
+    <text x="18" y="74" font-size="7.5" fill="#BE185D">A/B Diff. Bus + SM712 TVS</text>
+
+    <!-- 120Ω Terminator -->
+    <rect x="160" y="50" width="35" height="22" rx="2" fill="#FCE7F3" stroke="#DB2777"/>
+    <text x="163" y="64" font-size="8.5" font-weight="bold" fill="#9D174D">120 Ω</text>
+    <text x="155" y="82" font-size="7" fill="#64748B">Term. Resistor</text>
+
+    <!-- TrueSoil TDR-100 Probe -->
+    <rect x="210" y="36" width="108" height="85" rx="4" fill="#FFF1F2" stroke="#E11D48"/>
+    <text x="216" y="50" font-size="8.5" font-weight="bold" fill="#9F1239">TDR-100 Probe</text>
+    <text x="216" y="62" font-size="7.5" fill="#64748B">Modbus RTU RS-485</text>
+    <text x="216" y="73" font-size="7.5" fill="#475569">Power: 12V DC (50mA)</text>
+    <text x="216" y="84" font-size="7.5" fill="#059669">0–15 cm Depth Core</text>
+    <text x="216" y="95" font-size="7.5" fill="#BE185D">Measures: VWC (θ),</text>
+    <text x="216" y="105" font-size="7.5" fill="#BE185D">Bulk EC &amp; Soil Temp</text>
+    
+    <text x="12" y="112" font-size="8" fill="#64748B">Shielded Twisted Pair: Line A (Pink) / Line B (Purple) + 12V Fused Rail</text>
+  </g>
+
+  <!-- Wiring UART1 to SP3485 -->
+  <path d="M 580 395 L 805 395 L 805 525 L 825 525" fill="none" stroke="#DB2777" stroke-width="2"/>
+
+  <!-- ========================================================================= -->
+  <!-- 5. ACTUATION & HIGH-POWER SUBSYSTEM (Bottom Left / Center)                 -->
+  <!-- ========================================================================= -->
+
+  <!-- Roboteq / Cytron Dual 15A Smart DC Motor Controller -->
+  <g transform="translate(35, 630)">
+    <rect x="0" y="0" width="365" height="175" rx="8" fill="#F8FAFC" stroke="#0F172A" stroke-width="2"/>
+    <rect x="0" y="0" width="365" height="30" rx="8" fill="#1E293B"/>
+    <text x="15" y="20" font-size="12" font-weight="bold" fill="#FFFFFF">ROBOTEQ SDC2160 / CYTRON MDDS30 (DUAL 15A)</text>
+    
+    <text x="15" y="47" font-size="9" fill="#475569">Closed-Loop Dual H-Bridge Motor Driver · Optoisolated Logic Inputs</text>
+    
+    <!-- Fused Power In -->
+    <rect x="15" y="55" width="85" height="32" rx="3" fill="#FEE2E2" stroke="#EF4444"/>
+    <text x="20" y="70" font-size="9" font-weight="bold" fill="#B91C1C">12V BATTERY</text>
+    <text x="20" y="81" font-size="8" fill="#991B1B">Via 10A ATC Fuse</text>
+
+    <!-- GND_PWR Terminal -->
+    <rect x="110" y="55" width="85" height="32" rx="3" fill="#F1F5F9" stroke="#64748B"/>
+    <text x="115" y="70" font-size="9" font-weight="bold" fill="#1E293B">GND_PWR</text>
+    <text x="115" y="81" font-size="8" fill="#64748B">To Star Ground</text>
+
+    <!-- Logic Interface -->
+    <rect x="205" y="55" width="145" height="32" rx="3" fill="#EEF2FF" stroke="#6366F1"/>
+    <text x="210" y="68" font-size="8.5" font-weight="bold" fill="#4338CA">Optoisolated Control</text>
+    <text x="210" y="79" font-size="7.5" fill="#475569">PWM_L, DIR_L, PWM_R, DIR_R</text>
+
+    <!-- Motor Outputs & Encoders -->
+    <rect x="15" y="95" width="160" height="70" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text x="22" y="112" font-size="9" font-weight="bold" fill="#0F172A">LEFT CHANNEL (M1 + M2)</text>
+    <text x="22" y="125" font-size="8" fill="#64748B">Outputs: OUT1A, OUT1B (Parallel)</text>
+    <text x="22" y="137" font-size="8" fill="#4338CA">Encoder 1 &amp; 2 Hardware Decoders</text>
+    <text x="22" y="149" font-size="7.5" fill="#16A34A">1,200 PPR Quadrature (Ch A, Ch B)</text>
+
+    <rect x="190" y="95" width="160" height="70" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text x="198" y="112" font-size="9" font-weight="bold" fill="#0F172A">RIGHT CHANNEL (M3 + M4)</text>
+    <text x="198" y="125" font-size="8" fill="#64748B">Outputs: OUT2A, OUT2B (Parallel)</text>
+    <text x="198" y="137" font-size="8" fill="#4338CA">Encoder 3 &amp; 4 Hardware Decoders</text>
+    <text x="198" y="149" font-size="7.5" fill="#16A34A">1,200 PPR Quadrature (Ch A, Ch B)</text>
+  </g>
+
+  <!-- Wiring Pi 5 PWM/DIR to Motor Driver -->
+  <path d="M 580 320 L 650 320 L 650 670 L 360 670" fill="none" stroke="#4F46E5" stroke-width="2.5" marker-end="url(#arr-blue)"/>
+
+  <!-- Drive Motors Illustration -->
+  <g transform="translate(35, 830)">
+    <!-- 4x Planetary Motors Box -->
+    <rect x="0" y="0" width="365" height="100" rx="6" fill="#F1F5F9" stroke="#475569" stroke-width="1.5"/>
+    <text x="12" y="18" font-size="10.5" font-weight="bold" fill="#0F172A">4x GoBILDA 5202 PLANETARY MOTORS (12V 120RPM)</text>
+    <text x="12" y="32" font-size="8.5" fill="#64748B">Stall Torque: 30 kg·cm (2.94 N·m) each · Combined Stall Torque: 11.8 N·m</text>
+    
+    <!-- Motor Blocks -->
+    <rect x="12" y="42" width="75" height="48" rx="3" fill="#334155"/>
+    <text x="18" y="58" font-size="8" font-weight="bold" fill="#FFFFFF">M1 (Front-L)</text>
+    <text x="18" y="70" font-size="7" fill="#94A3B8">1,200 PPR Enc.</text>
+    <text x="18" y="82" font-size="7" fill="#F87171">Flyback TVS</text>
+
+    <rect x="100" y="42" width="75" height="48" rx="3" fill="#334155"/>
+    <text x="106" y="58" font-size="8" font-weight="bold" fill="#FFFFFF">M2 (Rear-L)</text>
+    <text x="106" y="70" font-size="7" fill="#94A3B8">1,200 PPR Enc.</text>
+    <text x="106" y="82" font-size="7" fill="#F87171">Flyback TVS</text>
+
+    <rect x="190" y="42" width="75" height="48" rx="3" fill="#334155"/>
+    <text x="196" y="58" font-size="8" font-weight="bold" fill="#FFFFFF">M3 (Front-R)</text>
+    <text x="196" y="70" font-size="7" fill="#94A3B8">1,200 PPR Enc.</text>
+    <text x="196" y="82" font-size="7" fill="#F87171">Flyback TVS</text>
+
+    <rect x="278" y="42" width="75" height="48" rx="3" fill="#334155"/>
+    <text x="284" y="58" font-size="8" font-weight="bold" fill="#FFFFFF">M4 (Rear-R)</text>
+    <text x="284" y="70" font-size="7" fill="#94A3B8">1,200 PPR Enc.</text>
+    <text x="284" y="82" font-size="7" fill="#F87171">Flyback TVS</text>
+  </g>
+
+  <!-- Wiring Motor Driver to Motors -->
+  <path d="M 85 805 L 85 830" fill="none" stroke="#1E293B" stroke-width="3"/>
+  <path d="M 270 805 L 270 830" fill="none" stroke="#1E293B" stroke-width="3"/>
+
+  <!-- Solux 20W Halogen Illuminator & Driver Circuit -->
+  <g transform="translate(420, 630)">
+    <rect x="0" y="0" width="360" height="175" rx="8" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1.8"/>
+    <rect x="0" y="0" width="360" height="28" rx="8" fill="#D97706"/>
+    <text x="15" y="19" font-size="11" font-weight="bold" fill="#FFFFFF">ACTIVE ILLUMINATION &amp; ACTUATION CONTROL</text>
+
+    <!-- Halogen Switching Circuit -->
+    <rect x="15" y="38" width="160" height="125" rx="5" fill="#FFFFFF" stroke="#FDE68A"/>
+    <text x="22" y="54" font-size="9.5" font-weight="bold" fill="#92400E">Solux 20W Halogen Lamp</text>
+    <text x="22" y="66" font-size="8" fill="#64748B">12V DC, 1.67A, 4700K Daylight</text>
+    <text x="22" y="78" font-size="8" fill="#B45309">Controlled by GPIO27 (Pin 13)</text>
+
+    <!-- MOSFET Schematic icon -->
+    <rect x="22" y="86" width="145" height="42" rx="3" fill="#FEF3C7"/>
+    <text x="28" y="99" font-size="8" font-weight="bold" fill="#B45309">Switch: Logic N-MOS (IRLZ44N)</text>
+    <text x="28" y="110" font-size="7.5" fill="#78350F">Gate Pulldown: 100kΩ · Gate Res: 220Ω</text>
+    <text x="28" y="121" font-size="7.5" fill="#DC2626">Flyback Diode: 1N5819 Schottky + 3A Fuse</text>
+    
+    <text x="22" y="142" font-size="7.5" fill="#64748B">Inrush Current Clamp: 10µH + 220µF LC filter</text>
+
+    <!-- Linear Actuator Probe Circuit -->
+    <rect x="185" y="38" width="160" height="125" rx="5" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text x="192" y="54" font-size="9.5" font-weight="bold" fill="#0F172A">Linear Actuator Probe</text>
+    <text x="192" y="66" font-size="8" fill="#64748B">12V DC, 1.2A, 110mm Stroke</text>
+    <text x="192" y="78" font-size="8" fill="#059669">Controlled by GPIO17 (Pin 11)</text>
+
+    <rect x="192" y="86" width="145" height="42" rx="3" fill="#F1F5F9"/>
+    <text x="198" y="99" font-size="8" font-weight="bold" fill="#334155">Dual Relay / H-Bridge Driver</text>
+    <text x="198" y="110" font-size="7.5" fill="#64748B">End-of-Stroke Limit Switches (NC)</text>
+    <text x="198" y="121" font-size="7.5" fill="#DC2626">Overcurrent Polyfuse: 2.0A Hold</text>
+
+    <text x="192" y="142" font-size="7.5" fill="#64748B">Raises &amp; lowers optical cup &amp; TDR probe</text>
+  </g>
+
+  <!-- Wire GPIO27 & GPIO17 to Halogen & Actuator -->
+  <path d="M 580 435 L 680 435 L 680 625 L 500 625 L 500 665" fill="none" stroke="#B91C1C" stroke-width="2" marker-end="url(#arr-red)"/>
+  <path d="M 580 455 L 700 455 L 700 620 L 660 620 L 660 665" fill="none" stroke="#475569" stroke-width="2"/>
+
+  <!-- 12V High-Power Bus to Motor Driver, Halogen, Actuator -->
+  <path d="M 370 280 L 405 280 L 405 600 L 100 600 L 100 655" fill="none" stroke="#DC2626" stroke-width="2.5"/>
+  <path d="M 405 600 L 450 600 L 450 665" fill="none" stroke="#DC2626" stroke-width="2"/>
+
+  <!-- Dirty Motor Ground (GND_PWR) to Star Ground Bolt -->
+  <path d="M 152 655 L 152 590 L 80 590 L 80 360" fill="none" stroke="#1E293B" stroke-width="2.5" stroke-dasharray="5,2"/>
+
+  <!-- Clean Logic Ground (GND_LOGIC) to Star Ground Bolt -->
+  <path d="M 580 240 L 410 240 L 410 355 L 85 355" fill="none" stroke="#059669" stroke-width="2"/>
+
+</svg>

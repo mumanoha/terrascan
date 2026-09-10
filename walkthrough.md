@@ -101,4 +101,19 @@
   7. **v1 vs. v2 Hardware Audit & "The Why Sheet"**: Detailed 10-point audit contrasting the informal $0 3D frame against the ISEF-grade engineered platform, paired with one-line justifications for every engineering parameter.
   8. **CS-First Translation**: Mapped rover physical components to CS architecture (Hardware Abstraction Layer / HAL, physical blocking RPC for sensor arm deployment, and air-gapped VPC fault domains for battery/compute isolation).
 
+### Step 12: TerraBot Internal Electronics Architecture & Wiring Diagram (Completed)
+- **Deliverables**:
+  - [docs/figures/02b_robot_wiring.md](file:///Users/muthumano/Documents/WORK/code/personal_projects/terrascan_project/docs/figures/02b_robot_wiring.md)
+  - [docs/figures/02b_robot_wiring.svg](file:///Users/muthumano/Documents/WORK/code/personal_projects/terrascan_project/docs/figures/02b_robot_wiring.svg)
+- **Purpose**: Crafted an electronics-grade system interconnect blueprint and power distribution analysis specifying exact physical pinouts, voltage regulation, protection circuitry, star grounding, and electrical autonomy math.
+- **Key Technical Highlights**:
+  1. **Production Vector Schematic (SVG)**: 1200x960 vector layout detailing real pinout registers, color-coded buses (12.8V, 5.0V/5.1V, 3.3V, I2C, SPI, UART, RS-485), and discrete protection components.
+  2. **Pin-to-Pin Interconnect Mapping**: Mapped all 40 pins of the Raspberry Pi 5 header (with fallback Jetson Nano mapping), identifying dedicated buses: I2C1 (AS7265x Triad, $4.7\text{ k}\Omega$ pullups), UART0 (ZED-F9P RTK-GNSS at $460,800\text{ bps}$), SPI0 (Adafruit RFM95W LoRaWAN), UART1/SP3485 (TrueSoil TDR-100 Modbus RS-485 probe), and optoisolated PWM/DIR channels.
+  3. **Multi-Stage Voltage Regulation**: 12.8V direct battery bus, $12.8\text{V} \to 5.1\text{V}$ 5A buck for Pi 5/NPU, $12.8\text{V} \to 5.0\text{V}$ 3A aux buck, and a dedicated ultra-low-noise LDO (TI LP5907, $<6.5\mu\text{V}_{\text{RMS}}$) isolated strictly for the AS7265x spectrometer.
+  4. **Active Protection Circuitry**: 15A master ATC blade fuse, 20A SPST master E-Stop switch, ideal diode reverse-polarity protection using an IRF4905 P-Channel MOSFET with 12V Zener gate clamp ($0.04\text{V}$ drop vs. $0.6\text{V}$ diode loss), Littelfuse SMBJ15CA TVS clamp diodes, and 1N5819 flyback diodes.
+  5. **EMI & Star-Ground Mitigation**: Single-point chassis star ground separating dirty motor ground (`GND_PWR`) from clean analog ground (`GND_LOGIC`), optoisolated 6N137 motor inputs, and a $10\mu\text{H} + 220\mu\text{F}$ LC inrush filter on the 20W halogen lamp.
+  6. **Rigorous Power Budget Math**: Proved $8.21\text{ hours}$ continuous field runtime on 256 Wh LiFePO4 battery ($25.96\text{ W}$ average draw) and $+50.7\text{ Wh/day}$ net-positive energy surplus under PA solar insolation ($154.5\text{ Wh/day}$ solar yield vs. $103.8\text{ Wh/day}$ 4-hour survey consumption).
+  7. **Itemized 2026 BOM Audit**: Detailed $1,481.80 BOM table with verified part numbers and suppliers, proving why the v1 $485 claim was scientifically unviable.
+  8. **CS-First Translation**: Mapped electrical concepts (buck converters as type casters, pull-ups as null-coalescing defaults, star grounding as memory sandboxing, flybacks as try-catch exception handlers, and RS-485 as protocol buffer serialization).
+
 

@@ -1,6 +1,7 @@
 * [🏠 Master Guide (Home)](README.md)
 * [📊 Executive System Overview](docs/figures/01_system_overview.md)
 * [🤖 Rover Mechanical Architecture](docs/figures/02a_robot_cad_concept.md)
+* [⚡ Rover Electrical Wiring](docs/figures/02b_robot_wiring.md)
 * [💻 CS-to-Chemistry Guide](knowledge/cs_to_chemistry_guide.md)
 
 * **Step 1: Literature Audit**
@@ -20,12 +21,14 @@
 
 * **Step 4: Rover Hardware**
   * [Rover Mechanical Architecture](docs/figures/02a_robot_cad_concept.md)
+  * [Rover Electrical Wiring](docs/figures/02b_robot_wiring.md)
   * [Robot BOM & Power Budget](hardware/bom.md)
   * [Sensor Calibration Cup](hardware/sensor_calibration.md)
 
 * **Step 5: Papers & Deliverables**
   * [Executive System Overview](docs/figures/01_system_overview.md)
   * [Rover Mechanical Architecture](docs/figures/02a_robot_cad_concept.md)
+  * [Rover Electrical Wiring](docs/figures/02b_robot_wiring.md)
   * [Official ISEF Abstract](docs/isef_abstract.md)
   * [Full Research Paper Draft](docs/paper_draft.md)
   * [06. Commercial Benchmark](research/06_competing_solutions_landscape.md)

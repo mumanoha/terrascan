@@ -82,3 +82,15 @@ This log documents every architectural, data engineering, feature selection, los
   4. *Sensor Articulation & Optical Dark Subtraction*: 2-DOF linear lead-screw actuated arm with 110 mm vertical stroke. Cup rimmed with 40 Shore A EPDM accordion skirt ($<0.01\text{ lux}$ ambient leakage) to execute a 4-step dark-current and PTFE 99% white reference subtraction.
   5. *Environmental Sealing*: IP65 sealed compute bay with conductive chassis heat sinking; IP66 battery bay with IP67 Gore hydrophobic membrane pressure equalization vent plug.
 - **Deliverable**: [docs/figures/02a_robot_cad_concept.md](docs/figures/02a_robot_cad_concept.md).
+
+### Entry MD-011: TerraBot Electrical Architecture, Multi-Rail Regulation, and Photodiode Star-Ground Isolation
+- **Date**: 2026-09-09
+- **Author**: TerraScan Research Agent
+- **Context**: The v1 project assumed all components wired directly to a common battery rail without regulation, fusing, level-shifting, or reverse-polarity protection. Concurrently, high-current (10–15A) motor switching generates severe ground bounce and EMI capable of destroying 3.3V silicon and corrupting nano-amp photodiode readouts on the AS7265x spectrometer.
+- **Decision**:
+  1. *Power Regulation*: Multi-stage synchronous buck converters (12.8V -> 5.1V 5A for Pi 5 + NPU; 12.8V -> 5.0V 3A for GPS/servos) and a dedicated ultra-low-noise LDO (TI LP5907, $<6.5\mu\text{V}_{\text{RMS}}$ noise, PSRR $>82\text{ dB}$) isolated strictly for the AS7265x sensor.
+  2. *Safety & Protection*: 15A master ATC fuse, 20A SPST master E-Stop switch, and an ideal diode circuit utilizing an IRF4905 P-Channel MOSFET with 12V Zener gate clamp (yielding $<0.04\text{V}$ drop vs. $0.6\text{V}$ diode loss). TVS bidirectional suppressors across 12V and solar buses; 1N5819 Schottky flyback diodes across inductive lamp and actuator relays.
+  3. *Noise & Ground Loop Mitigation*: Star-ground topology anchored at the negative battery terminal bolt. Complete physical separation between dirty motor/actuator return (`GND_PWR`) and clean logic/sensor return (`GND_LOGIC`). Control signals to the motor driver are optoisolated via 6N137 high-speed optocouplers. The 20W halogen lamp features an LC low-pass inrush filter ($10\mu\text{H} + 220\mu\text{F}$) to prevent brownouts.
+  4. *Serial Bus Integrity*: Differential RS-485 with SP3485 transceiver and SM712 TVS diodes for the 0–15 cm TDR soil moisture probe; hardware $4.7\text{ k}\Omega$ metal-film pull-up resistors for Fast Mode I2C.
+  5. *Power Derivation*: Demonstrated $8.21\text{ hours}$ continuous field runtime on 256 Wh LiFePO4 battery ($25.96\text{ W}$ average draw) and $+50.7\text{ Wh/day}$ net-positive solar equilibrium under PA insolation.
+- **Deliverables**: [docs/figures/02b_robot_wiring.md](docs/figures/02b_robot_wiring.md) and [docs/figures/02b_robot_wiring.svg](docs/figures/02b_robot_wiring.svg).

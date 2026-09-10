@@ -15,16 +15,22 @@
 - Completed `research/07_gap_analysis_v1_vs_literature.md` benchmarking all 10 v1 claims against 23 peer-reviewed studies.
 - Updated `knowledge/` base with spectroscopic physics of N, P, K and logged decisions MD-001 through MD-003.
 
-### Phase 3: Step 2 — Scientific Deep Dive (ACTIVE)
-- **Target Deliverables**:
-  1. `research/01_soil_science_fundamentals.md`: Comprehensive breakdown of N, P, K chemical speciation, pool dynamics, wet chemistry laboratory extraction protocols (Mehlich-3, Bray-1, Olsen, Dumas/Kjeldahl, KCl) vs. optical sensor capabilities, and vertical depth-decay profiles.
-  2. `research/02_remote_sensing_spectroscopy.md`: Rigorous radiative transfer physics (Kubelka-Munk, Hapke), electronic crystal field transitions (Fe³⁺) vs. molecular vibrational overtones/combinations ($\text{O-H}, \text{C-H}, \text{N-H}, \text{Al-OH}$), detailed Sentinel-2 MSI band-by-band information mapping, multi-temporal bare-soil compositing algorithms (GEOS3, SYSI, Barest Pixel), and fundamental physical limits (optical penetration depth, moisture masking, surface crusts).
-  3. `research/05_agronomy_regulatory_context.md`: Pennsylvania agricultural regulatory statutes (25 Pa. Code Chapter 102 Ag E&S vs. Act 38 / Chapter 91 Nutrient Management Plans), PA Phosphorus Index (P-Index) mechanics, Penn State Extension soil test calibration and agronomic interpretation tables (STP, STK), and positioning TerraScan v2 as an intra-field VRT spatial interpolator rather than a statutory test substitute.
-- **Verification & Documentation**:
-  - Update `knowledge/soil_nutrient_domain.md` and `knowledge/literature_index.md` with new citations and mechanisms.
-  - Update `walkthrough.md` and provide the required Step 2 Learning Recap.
+### Phase 3: Step 2 — Scientific Deep Dive (COMPLETED)
+- Completed `research/01_soil_science_fundamentals.md`, `research/02_remote_sensing_spectroscopy.md`, and `research/05_agronomy_regulatory_context.md`.
+- Completed `knowledge/cs_to_chemistry_guide.md` and updated `knowledge/` base.
 
-### Subsequent Phases
-- Step 3: Computational/ML Deep Dive (`research/03`, `04`, `models/`)
-- Step 4: Engineering Deep Dive (`hardware/`, data pipeline architecture)
-- Step 5: Research Synthesis (`docs/isef_abstract.md`, `docs/paper_draft.md`)
+### Phase 4: Step 3 — Computational & Machine Learning Deep Dive (COMPLETED)
+- Completed `research/03_ml_architectures_pinn_fno.md`, `research/04_uncertainty_quantification.md`.
+- Trained and verified `models/baselines/` and `models/fno_v2/`.
+
+### Phase 5: Step 4 — Rover Hardware & Physical Schematics (ACTIVE)
+- **Completed**:
+  1. `hardware/bom.md`: Full 2026 BOM ($1,482) and power runtime analysis.
+  2. `hardware/sensor_calibration.md`: 4-step optical standardization protocol.
+  3. `docs/figures/02a_robot_cad_concept.md` & `.svg`: 3-view orthographic CAD blueprint, slope stability physics, 520 mm chassis packaging, and EPDM light-shield skirt.
+- **Active Task**:
+  4. `docs/figures/02b_robot_wiring.md` & `02b_robot_wiring.svg`: Complete internal electronics wiring diagram, pin-to-pin interconnects, voltage regulation, protection circuitry (fuses, TVS, flyback, reverse-polarity MOSFET), star-ground topology, power budget derivation, EMI mitigation, and updated 2026 BOM.
+
+### Phase 6: Step 5 — Research Synthesis & Deliverables (COMPLETED / ACTIVE)
+- Completed `docs/figures/01_system_overview.md`, `docs/isef_abstract.md`, `docs/paper_draft.md`, `research/06_competing_solutions_landscape.md`.
+- Deployed on Google Cloud Run and GitHub Pages.
