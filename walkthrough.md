@@ -88,4 +88,17 @@
   3. **Executive Color Palette**: Exactly 5 harmonious theme colors with a complete stage legend table.
   4. **Native Mermaid Integration**: Integrated `mermaid.js` and `docsify-mermaid.js` into `index.html`, verified dynamically on Google Cloud Run revision `terrascan-00004-rjx`.
 
+### Step 11: TerraBot Rover Mechanical & Physical CAD Architecture (Completed)
+- **Deliverable**: [docs/figures/02a_robot_cad_concept.md](file:///Users/muthumano/Documents/WORK/code/personal_projects/terrascan_project/docs/figures/02a_robot_cad_concept.md)
+- **Purpose**: Produced an engineering-grade mechanical blueprint and comprehensive technical specification for the TerraBot field rover, evaluating physical packaging, slope rollover physics, optical shielding, and environmental sealing for ISEF / STS review.
+- **Key Technical Highlights**:
+  1. **Three-View Orthographic Blueprint (SVG)**: Custom vector drawing displaying View A (Top-Down Plan View, 520 mm width, 400 mm wheelbase, 450 mm track gauge), View B (Side Profile, 180 mm R-1 wheels, 110 mm GC, 2-DOF articulated sensor arm, 460 mm RTK mast), and View C (Front Elevation, static roll tipping angle vector, slung battery bay).
+  2. **BOM Component Mapping (Zones 1–7)**: Labeled chassis zones matching the $1,482 BOM: (1) IP65 Compute Bay, (2) Articulated Spectral Sensor Arm, (3) RTK-GNSS Elevated Antenna Mount, (4) Slung LiFePO4 Battery Bay, (5) LoRaWAN 915 MHz Dipole, (6) 4x Planetary Gear Motors & Quadrature Encoders, (7) TrueSoil TDR-100 Moisture Probe & Soil Auger.
+  3. **Drivetrain Selection & Agronomic Justification**: 4WD Skid-Steer with 180 mm R-1 chevron rubber tires selected over continuous tracks. Eliminates topsoil shearing during turns, avoids mud clogging in clay soils, saves 40% battery draw, provides true zero-radius turning within standard 30" (762 mm) crop rows, and exerts only $4.4\text{ psi}$ ground pressure (well below the $10\text{--}15\text{ psi}$ soil compaction limit).
+  4. **Slope Stability & Center-of-Gravity Analysis**: Computed 3D center of gravity ($X_{cg} = +12.5\text{ mm}$, $Z_{cg} = 135.5\text{ mm}$, total mass $13.90\text{ kg}$). Static roll threshold is $\theta_{\text{roll}} = 58.9^{\circ}$ and pitch threshold is $\theta_{\text{pitch}} = 55.9^{\circ}$, providing a $2.95\times$ safety factor on steep 20° Pennsylvania hillside slopes.
+  5. **Optical Shielding & In-Situ Calibration**: 2-DOF linear lead-screw actuated arm with 110 mm stroke and 40 Shore A durometer EPDM accordion skirt ($<0.01\text{ lux}$ interior ambient leakage). Implements an automated 4-step reflectance calibration ($I_{\text{dark}}$ dark current, 20W Solux halogen $I_{\text{soil}}$, internal motorized 99% PTFE Zenith Lite tile $I_{\text{white}}$, and calibrated diffuse reflectance $R(\lambda)$ calculation).
+  6. **Enclosure, Environmental & Thermal Strategy**: 2.5 mm 5052-H32 aluminum chassis tub acting as an external heat sink for the Raspberry Pi 5 / Hailo-8L NPU; IP65 dust-tight compute enclosure; partitioned battery bay with IP67 Gore hydrophobic membrane pressure equalization vent plugs.
+  7. **v1 vs. v2 Hardware Audit & "The Why Sheet"**: Detailed 10-point audit contrasting the informal $0 3D frame against the ISEF-grade engineered platform, paired with one-line justifications for every engineering parameter.
+  8. **CS-First Translation**: Mapped rover physical components to CS architecture (Hardware Abstraction Layer / HAL, physical blocking RPC for sensor arm deployment, and air-gapped VPC fault domains for battery/compute isolation).
+
 

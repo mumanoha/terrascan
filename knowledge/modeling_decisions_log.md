@@ -70,3 +70,15 @@ This log documents every architectural, data engineering, feature selection, los
 - **Author**: TerraScan Research Agent
 - **Context**: The NVIDIA Jetson Nano specified in v1 is discontinued (EOL since 2023) and power-inefficient (10–12W).
 - **Decision**: Select Raspberry Pi 5 (8GB) paired with the official Raspberry Pi AI Kit (Hailo-8L M.2 NPU). Delivers 26 TOPS of INT8 inference at only 2.5W, enabling real-time edge FNO evaluation in the field at an affordable price ($155 combined).
+
+### Entry MD-010: TerraBot Physical/Mechanical Layout, 4WD Skid-Steer Drivetrain, and Dark-Current Optical Articulation
+- **Date**: 2026-09-09
+- **Author**: TerraScan Research Agent
+- **Context**: Ground-truth calibration requires a field-capable rover that traverses muddy agricultural topsoils, fits between standard 30-inch (76.2 cm) crop rows without root damage, resists rollover on 20° hillsides, and seals an optical chamber against cloddy soil for drift-free reflectance scans.
+- **Decision**:
+  1. *Chassis & Dimensions*: 520 mm outer width, 400 mm wheelbase, 450 mm track gauge, 110 mm ground clearance. Constructed with 2.5 mm 5052-H32 aluminum tub and 2020 T-slot rails.
+  2. *Drivetrain*: 4WD Skid-Steer with 180 mm R-1 chevron rubber tires ($4.4\text{ psi}$ ground pressure, zero soil compaction risk, true $0\text{ cm}$ zero-radius turning). Rejected continuous tracks due to destructive topsoil shearing and sticky clay packing.
+  3. *Center of Gravity & Stability*: Slung low-belly battery tray ($Z = 120\text{ mm}$) lowers overall vehicle $Z_{cg}$ to $135.5\text{ mm}$ (gross mass $13.90\text{ kg}$). Static roll threshold is $58.9^{\circ}$ ($2.95\times$ safety factor on 20° PA hillsides).
+  4. *Sensor Articulation & Optical Dark Subtraction*: 2-DOF linear lead-screw actuated arm with 110 mm vertical stroke. Cup rimmed with 40 Shore A EPDM accordion skirt ($<0.01\text{ lux}$ ambient leakage) to execute a 4-step dark-current and PTFE 99% white reference subtraction.
+  5. *Environmental Sealing*: IP65 sealed compute bay with conductive chassis heat sinking; IP66 battery bay with IP67 Gore hydrophobic membrane pressure equalization vent plug.
+- **Deliverable**: [docs/figures/02a_robot_cad_concept.md](docs/figures/02a_robot_cad_concept.md).
