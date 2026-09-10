@@ -106,5 +106,19 @@ This log documents every architectural, data engineering, feature selection, los
   4. *Store-and-Forward Rural Outage Resilience*: Implemented an edge SQLite Write-Ahead Log (WAL) with monotonic 64-bit sequence IDs, millisecond UTC timestamps, and SHA-256 payload checksums. During cellular/LoRa blackouts, the rover buffers records locally without data loss. Upon reconnection, windowed burst transmission paired with Cloud Dataflow sliding-window deduplication (Bloom filter) guarantees strict end-to-end idempotency.
   5. *Agricultural Data Governance & Spatial Differential Privacy*: Implemented tenant isolation in Cloud Firestore and BigQuery Row-Level Security (RLS). For public model training and benchmarking, precise field coordinates are obfuscated via 250m Laplacian spatial jittering and aggregated to Uber H3 Resolution 7 hexagonal zones (~5.16 km²), preventing reverse-engineering of farm boundaries while preserving pedological gradients.
   6. *Pilot Cost Economics*: Itemized pilot deployment operating costs across all subgraphs to \$75.00/month for 10 farms / 5,000 acres, with GPU model serving representing 72% of expenditures and serverless components running almost entirely within free tier allocations.
-- **Deliverable**: [docs/figures/03_gcp_technical_architecture.md](docs/figures/03_gcp_technical_architecture.md).
+### Entry MD-013: Interactive Diagram & Image Lightbox Modal and Aspect-Ratio Balanced Architecture Flowchart
+- **Date**: 2026-09-09
+- **Author**: TerraScan Research Agent
+- **Context**: The full GCP cloud architecture diagram rendered at extreme horizontal width (>3400px), causing Docsify's responsive CSS (920px container) to squash the Mermaid flowchart down to an unreadable 135px height. Simultaneously, native Docsify plugins (like zoom-image) ignore dynamically injected Mermaid SVGs and vector schematics, preventing users and science judges from zooming into critical subsystem details.
+- **Decision**:
+  1. *Balanced 2-Tier Stacked Flowchart Architecture*: Refactored the single-line `flowchart LR` diagram in `docs/figures/03_gcp_technical_architecture.md` into a structured 2-tier DAG (`flowchart TB`). Tier 1 pairs parallel ingestion pipelines (Subgraphs 1 & 2: Rover Telemetry + Copernicus Satellite Pull) feeding down into Subgraph 3 (Cloud Ingestion & Streaming Feature Store). Tier 2 places Subgraph 4 (Vertex AI Platform) feeding Subgraphs 5 & 6 (Application, Analytics & Farmer Delivery), framed by Cross-Cutting Governance & Security. This reduced the aspect ratio from 6:1 to ~1.2:1, increasing native on-page text and node size by ~2.5x.
+  2. *Universal Lightbox Pop-up Modal*: Engineered a vanilla JavaScript and CSS lightbox modal in `index.html` featuring:
+     - Full click delegation across `.mermaid` diagrams, `.markdown-section img` tags, and standalone SVGs.
+     - Cloned SVG DOM tree preservation with viewBox-calculated aspect-ratio fitting.
+     - Smooth pan-and-drag interaction with cursor cues (`grab` / `grabbing` / `zoom-in`).
+     - Dynamic scaling via mouse wheel, trackpad pinch, and hardware-accelerated zoom buttons (`+ Zoom`, `- Zoom`, `Reset 1:1`, from 15% up to 600%).
+     - Dual-mode card background toggle (`Card: White` vs `Card: Clear`) to ensure high contrast for black-line CAD blueprints and white-background diagrams against the dark frosted backdrop.
+     - Contextual title bar auto-extracting preceding Markdown headings or figure captions.
+- **Deliverables**: [index.html](index.html), [docs/figures/03_gcp_technical_architecture.md](docs/figures/03_gcp_technical_architecture.md).
+
 
