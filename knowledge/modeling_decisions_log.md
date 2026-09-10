@@ -81,7 +81,7 @@ This log documents every architectural, data engineering, feature selection, los
   3. *Center of Gravity & Stability*: Slung low-belly battery tray ($Z = 120\text{ mm}$) lowers overall vehicle $Z_{cg}$ to $135.5\text{ mm}$ (gross mass $13.90\text{ kg}$). Static roll threshold is $58.9^{\circ}$ ($2.95\times$ safety factor on 20° PA hillsides).
   4. *Sensor Articulation & Optical Dark Subtraction*: 2-DOF linear lead-screw actuated arm with 110 mm vertical stroke. Cup rimmed with 40 Shore A EPDM accordion skirt ($<0.01\text{ lux}$ ambient leakage) to execute a 4-step dark-current and PTFE 99% white reference subtraction.
   5. *Environmental Sealing*: IP65 sealed compute bay with conductive chassis heat sinking; IP66 battery bay with IP67 Gore hydrophobic membrane pressure equalization vent plug.
-- **Deliverable**: [docs/figures/02a_robot_cad_concept.md](docs/figures/02a_robot_cad_concept.md).
+- **Deliverable**: [docs/figures/02a_robot_cad_concept.md](/docs/figures/02a_robot_cad_concept.md).
 
 ### Entry MD-011: TerraBot Electrical Architecture, Multi-Rail Regulation, and Photodiode Star-Ground Isolation
 - **Date**: 2026-09-09
@@ -93,7 +93,7 @@ This log documents every architectural, data engineering, feature selection, los
   3. *Noise & Ground Loop Mitigation*: Star-ground topology anchored at the negative battery terminal bolt. Complete physical separation between dirty motor/actuator return (`GND_PWR`) and clean logic/sensor return (`GND_LOGIC`). Control signals to the motor driver are optoisolated via 6N137 high-speed optocouplers. The 20W halogen lamp features an LC low-pass inrush filter ($10\mu\text{H} + 220\mu\text{F}$) to prevent brownouts.
   4. *Serial Bus Integrity*: Differential RS-485 with SP3485 transceiver and SM712 TVS diodes for the 0–15 cm TDR soil moisture probe; hardware $4.7\text{ k}\Omega$ metal-film pull-up resistors for Fast Mode I2C.
   5. *Power Derivation*: Demonstrated $8.21\text{ hours}$ continuous field runtime on 256 Wh LiFePO4 battery ($25.96\text{ W}$ average draw) and $+50.7\text{ Wh/day}$ net-positive solar equilibrium under PA insolation.
-- **Deliverables**: [docs/figures/02b_robot_wiring.md](docs/figures/02b_robot_wiring.md) and [docs/figures/02b_robot_wiring.svg](docs/figures/02b_robot_wiring.svg).
+- **Deliverables**: [docs/figures/02b_robot_wiring.md](/docs/figures/02b_robot_wiring.md) and [docs/figures/02b_robot_wiring.svg](/docs/figures/02b_robot_wiring.svg).
 
 ### Entry MD-012: Enterprise GCP Cloud Architecture, BigQuery-Backed Feature Store, and Zero-Loss Rural Store-and-Forward
 - **Date**: 2026-09-09
@@ -119,6 +119,19 @@ This log documents every architectural, data engineering, feature selection, los
      - Dynamic scaling via mouse wheel, trackpad pinch, and hardware-accelerated zoom buttons (`+ Zoom`, `- Zoom`, `Reset 1:1`, from 15% up to 600%).
      - Dual-mode card background toggle (`Card: White` vs `Card: Clear`) to ensure high contrast for black-line CAD blueprints and white-background diagrams against the dark frosted backdrop.
      - Contextual title bar auto-extracting preceding Markdown headings or figure captions.
-- **Deliverables**: [index.html](index.html), [docs/figures/03_gcp_technical_architecture.md](docs/figures/03_gcp_technical_architecture.md).
+- **Deliverables**: [index.html](/index.html), [docs/figures/03_gcp_technical_architecture.md](/docs/figures/03_gcp_technical_architecture.md).
+
+### Entry MD-014: Responsive Table Horizontal Scrolling and Root-Relative SPA Navigation
+- **Date**: 2026-09-09
+- **Author**: TerraScan Research Agent
+- **Context**: Users reported inability to scroll horizontally on multi-column benchmark and audit tables (e.g., Table 1 in `research/07_gap_analysis_v1_vs_literature.md`), clipping critical evidence columns on the right. Simultaneously, relative markdown paths in Docsify sidebars (`_sidebar.md`) caused nested 404 navigation errors when users clicked between subdirectory pages.
+- **Decision**:
+  1. *Root Cause Analysis*: CSS rule `table { display: table !important; width: 100% !important; }` overrode Docsify's native `display: block; overflow: auto;`. Per CSS 2.1 / Display Module Level 3 specification, browsers strictly ignore `overflow-x: auto` on elements with `display: table`.
+  2. *Responsive Table Container Architecture*: Wrapped all rendered tables inside a responsive `.table-wrapper` with `width: 100% !important; max-width: 100% !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch;`. Table styling inside wrapper configured to `display: table !important; width: auto !important; min-width: 100% !important;` with `th { white-space: nowrap; }`. This preserves natural column proportions without artificially stretching narrow columns to 500px, while enabling smooth horizontal scrolling with custom emerald scrollbars (`#10b981`).
+  3. *Dynamic DOM Lifecycle Hook*: Implemented a Docsify lifecycle plugin (`hook.doneEach`) that automatically scans the `.markdown-section` DOM on every route change and wraps any newly compiled `<table>` elements into `.table-wrapper` idempotently. Added a CSS direct-child fallback (`.markdown-section > table { display: block !important; overflow-x: auto !important; }`) to prevent clipping before JS execution.
+  4. *Root-Relative Navigation*: Prepend leading slashes (`/...`) across all 25 links in root `_sidebar.md` and synchronized identical copies across all 6 subdirectory sidebars (`docs/`, `docs/figures/`, `hardware/`, `knowledge/`, `models/`, `research/`). Fixed all relative links in `knowledge/modeling_decisions_log.md`.
+  5. *Automated Verification*: Developed headless Chrome CDP crawler (`scratch/test_portal_e2e.py`) validating all 26 routes (HTTP 200, 0 JS errors, all tables wrapped, horizontal scroll verified with `maxScroll = 792px`).
+- **Deliverables**: [index.html](/index.html), [_sidebar.md](/_sidebar.md), [knowledge/modeling_decisions_log.md](/knowledge/modeling_decisions_log.md).
+
 
 

@@ -141,3 +141,19 @@
   5. **Card Contrast Toggle**: Implemented high-contrast `Card: White` mode as default, ensuring black-line CAD mechanical blueprints and electrical schematics render crisply with high legibility against the dark frosted backdrop.
   6. **End-to-End Headless Chrome CDP Verification**: Verified against the live Google Cloud Run service (`terrascan-00011-czv`), capturing high-resolution verification screenshots of native on-page rendering, lightbox pop-up activation, 156% zoom view, and CAD schematic inspection.
 
+### Step 15: Responsive Table Horizontal Scrolling, Root-Relative SPA Navigation, and Full Portal E2E Audit (Completed)
+- **Deliverables**:
+  - [index.html](file:///Users/muthumano/Documents/WORK/code/personal_projects/terrascan_project/index.html)
+  - [_sidebar.md](file:///Users/muthumano/Documents/WORK/code/personal_projects/terrascan_project/_sidebar.md) & 6 synchronized subdirectory sidebars
+  - [knowledge/modeling_decisions_log.md](file:///Users/muthumano/Documents/WORK/code/personal_projects/terrascan_project/knowledge/modeling_decisions_log.md) (Entry MD-014)
+- **Problems Addressed**:
+  1. Users could not scroll horizontally on wide tables (such as Table 1 and Table 2 in `research/07_gap_analysis_v1_vs_literature.md`), causing the rightmost columns (Classification, Citations, RPD/RPIQ) to be clipped.
+  2. Relative links in `_sidebar.md` and `knowledge/modeling_decisions_log.md` caused nested 404 errors when navigating between subdirectories.
+- **Key Technical Remediation**:
+  1. **Root Cause Diagnosis**: Identified that `table { display: table !important; width: 100% !important; }` in `index.html` broke scrolling because the CSS specification does not apply `overflow-x: auto` to elements with `display: table`.
+  2. **Responsive `.table-wrapper` Architecture**: Refactored CSS to wrap all tables in a `.table-wrapper` container with `overflow-x: auto !important`, `-webkit-overflow-scrolling: touch`, and custom emerald green scrollbars (`#10b981`). Configured table styles to `display: table !important; width: auto !important; min-width: 100% !important;` with `th { white-space: nowrap; }`, preserving natural proportional widths without column distortion.
+  3. **Docsify Lifecycle Auto-Wrapper**: Added a Docsify plugin hook (`hook.doneEach`) to dynamically wrap every rendered `<table>` element across all route transitions, with a pure CSS fallback (`.markdown-section > table`) preventing layout jumps before JS execution.
+  4. **Root-Relative Navigation Links**: Updated all 25 navigation links in `_sidebar.md` to root-relative paths (`/...`) and synchronized across all 6 subdirectory sidebars. Fixed all 5 relative links in `knowledge/modeling_decisions_log.md`.
+  5. **Exhaustive Link and CDP Verification**: Ran an automated Python link validator confirming 0 broken links across 261 total markdown links. Executed a headless Chrome CDP crawler across all 26 portal routes, verifying 100% HTTP 200, 0 console errors, all tables wrapped, and confirmed Table 1 horizontal scrolling with `maxScroll = 792px`.
+
+

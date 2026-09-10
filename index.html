@@ -39,10 +39,64 @@
       overflow-y: hidden;
       max-width: 100%;
     }
-    table {
-      display: table !important;
+    /* --- Responsive Scrollable Tables --- */
+    .table-wrapper {
       width: 100% !important;
-      margin-bottom: 1.5rem;
+      max-width: 100% !important;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch;
+      margin: 1.5rem 0;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      position: relative;
+    }
+
+    .table-wrapper table {
+      display: table !important;
+      width: auto !important;
+      min-width: 100% !important;
+      margin: 0 !important;
+      border-collapse: collapse;
+    }
+
+    .table-wrapper th {
+      white-space: nowrap;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    .table-wrapper td {
+      font-size: 13px;
+      line-height: 1.5;
+      padding: 10px 14px;
+      vertical-align: top;
+    }
+
+    /* Modern Styled Scrollbar for Tables */
+    .table-wrapper::-webkit-scrollbar {
+      height: 9px;
+    }
+    .table-wrapper::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.08);
+      border-radius: 4px;
+    }
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: #10b981;
+      border-radius: 4px;
+    }
+    .table-wrapper::-webkit-scrollbar-thumb:hover {
+      background: #059669;
+    }
+
+    /* Fallback for un-wrapped tables before JS execution */
+    .markdown-section > table {
+      display: block !important;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch;
+      max-width: 100%;
     }
 
     /* --- Interactive Lightbox & Diagram Zoom Modal --- */
@@ -194,7 +248,22 @@
             tags: 'ams'
           }
         }
-      }
+      },
+      plugins: [
+        function(hook, vm) {
+          hook.doneEach(function() {
+            // Automatically wrap all markdown tables in responsive scrollable container
+            document.querySelectorAll('.markdown-section table').forEach(function(table) {
+              if (!table.parentElement.classList.contains('table-wrapper')) {
+                var wrapper = document.createElement('div');
+                wrapper.className = 'table-wrapper';
+                table.parentNode.insertBefore(wrapper, table);
+                wrapper.appendChild(table);
+              }
+            });
+          });
+        }
+      ]
     };
   </script>
 
