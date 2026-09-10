@@ -12,7 +12,7 @@ Small-scale agricultural producers lack cost-effective tools for intra-field soi
 
 TerraScan v2 overcomes these fundamental spectroscopic and physical barriers through an anchor-calibrated multimodal system. We couple multi-temporal Sentinel-2 bare-soil medoid composites with an autonomous field rover deploying an active light-shielded 18-channel multi-spectral sensor (410–940 nm), concurrent soil moisture probe, and an automated 99% diffuse PTFE reflectance calibration routine. Spatial nutrient fields are modeled using a 2D Fourier Neural Operator (FNO) trained via a physics-guided multi-objective loss function encoding the 2D advection-dispersion solute transport PDE along elevation gradients, mass conservation, an exponential vertical depth-stratification operator ($C(z) = C_0 e^{-\beta z}$), and the farmer's statutory 3-year certified laboratory composite test.
 
-Evaluated under 5-fold Spatial Block Cross-Validation with a 5 km geographic exclusion buffer, TerraScan v2 achieved $R^2 = 0.76$ ($\text{RMSE} = 0.38\text{ g/kg}$) for Total Nitrogen, $R^2 = 0.72$ ($\text{RMSE} = 4.2\text{ mg/kg}$) for Available Phosphorus, and $R^2 = 0.74$ ($\text{RMSE} = 26.5\text{ mg/kg}$) for Exchangeable Potassium, outperforming Random Forest ($R^2 = 0.30$), Gradient Boosting ($R^2 = 0.25$), and unconstrained MLPs ($R^2 = 0.12$). Integrated Split Conformal Prediction delivers statistically guaranteed 90% confidence intervals for every 10-meter pixel. TerraScan v2 transforms routine $12 compliance lab tests into actionable Variable Rate Technology prescription maps, bridging precision agriculture and environmental conservation.
+TerraScan v2's neural operator architecture, multi-objective physics-guided loss function, and split conformal calibrator have been fully implemented and unit-tested in code. We formalize a rigorous 5-fold Spatial Block Cross-Validation protocol with a 5 km geographic exclusion buffer to eliminate spatial autocorrelation leakage, establishing literature-benchmarked validation targets of $R^2 > 0.70$ ($\text{NRMSE} < 15\%$) for Total Nitrogen and $R^2 > 0.65$ ($\text{NRMSE} < 15\%$) for Available Phosphorus and Potassium. Integrated Split Conformal Prediction is formulated to deliver distribution-free 90% confidence intervals for every 10-meter pixel upon complete multi-temporal field dataset ingestion. TerraScan v2 provides an engineering-complete computational foundation to transform routine $12 compliance lab tests into actionable Variable Rate Technology prescription maps.
 
 ---
 
@@ -111,27 +111,34 @@ To eliminate spatial autocorrelation leakage, the study area was divided into di
 
 ---
 
-## 4. Results & Empirical Evaluation
+## 4. Architectural Verification & Planned Validation Protocol
 
-### 4.1 Comparative Model Performance under Spatial Block-CV
-Table 1 presents the performance of TerraScan v2 against all baseline architectures under 5-Fold Spatial Block Cross-Validation.
+### 4.1 Implementation Status & Synthetic Unit Verification
+The complete computational pipeline has been implemented across dedicated codebase modules:
+1. **2D Fourier Neural Operator (`models/fno_v2/model.py`)**: Implements continuous frequency-domain spectral convolutions (`SpectralConv2d`), lifting/projection MLPs, and non-negative Softplus activation. Verified via forward unit-testing on synthetic multi-band rasters ($2 \times 6 \times 32 \times 32$), confirming dimensional consistency for joint N/P/K field outputs and aleatoric log-variance heads.
+2. **Multi-Objective Physics Loss (`PhysicsGuidedOperatorLoss`)**: Encodes the continuous 2D advection-dispersion transport PDE residual ($\mathcal{L}_{\text{pde}}$), mass conservation penalty ($\mathcal{L}_{\text{mass}}$), exponential depth-stratification operator ($\mathcal{L}_{\text{depth}}$), and anchor lab constraint ($\mathcal{L}_{\text{anchor}}$).
+3. **Split Conformal Prediction Engine (`SplitConformalCalibrator`)**: Computes non-conformity scores and empirical calibration quantile $\hat{q}$ under exchangeable calibration blocks. Verified via unit simulation ($N_{\text{calib}}=150, N_{\text{test}}=200$), demonstrating distribution-free coverage guarantee ($\ge 90\%$).
+4. **Classical Baseline Suite (`models/baselines/train_baselines.py`)**: Implements Dummy Mean, PLSR, Ridge, Random Forest, and HistGradientBoosting regressors.
 
-**Table 1**: Model benchmark comparison under 5-Fold Spatial Block Cross-Validation ($N=628$, 5 km buffer). All metrics represent mean out-of-fold generalization.
+### 4.2 Planned Validation Matrix under 5-Fold Spatial Block-CV
+Quantitative validation is scheduled upon completion of multi-temporal bare-soil medoid data ingestion across Google Earth Engine. Table 1 establishes the formal validation suite, baseline roles, and literature-derived target acceptance thresholds.
 
-| Model Architecture | Target Nutrient | $R^2$ (Spatial CV) | RMSE | MAE | NRMSE (%) | RPIQ | Conformal Coverage ($\alpha=0.10$) |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Dummy (Mean Baseline)** | Total N (g/kg)<br>Available P (mg/kg)<br>Exch. K (mg/kg) | -0.15<br>-0.29<br>-0.32 | 1.12<br>8.01<br>168.4 | 0.94<br>6.36<br>138.2 | 28.0%<br>22.3%<br>24.1% | 0.85<br>1.15<br>0.92 | — |
-| **PLSR (5 components)** | Total N (g/kg)<br>Available P (mg/kg)<br>Exch. K (mg/kg) | 0.48<br>0.34<br>0.31 | 0.72<br>5.71<br>124.0 | 0.58<br>4.73<br>98.5 | 18.0%<br>15.8%<br>17.7% | 1.32<br>1.62<br>1.25 | 78.4% (Uncalibrated) |
-| **Random Forest** | Total N (g/kg)<br>Available P (mg/kg)<br>Exch. K (mg/kg) | 0.54<br>0.30<br>0.35 | 0.68<br>5.87<br>120.5 | 0.52<br>4.84<br>92.1 | 17.0%<br>16.3%<br>17.2% | 1.40<br>1.57<br>1.29 | 81.2% (Uncalibrated) |
-| **HistGradientBoosting** | Total N (g/kg)<br>Available P (mg/kg)<br>Exch. K (mg/kg) | 0.56<br>0.25<br>0.32 | 0.66<br>6.09<br>123.1 | 0.50<br>4.98<br>94.8 | 16.5%<br>16.9%<br>17.6% | 1.44<br>1.51<br>1.26 | 79.5% (Uncalibrated) |
-| **TerraScan v1 (4-Layer MLP)**| Total N (g/kg)<br>Available P (mg/kg)<br>Exch. K (mg/kg) | 0.22<br>0.14<br>0.18 | 0.88<br>16.31<br>142.4 | 0.71<br>12.80<br>110.2 | 22.0%<br>45.3%<br>20.3% | 1.08<br>0.56<br>1.09 | 64.0% (Uncalibrated) |
-| **TerraScan v2 (Satellite FNO)**| Total N (g/kg)<br>Available P (mg/kg)<br>Exch. K (mg/kg) | 0.71<br>0.52<br>0.56 | 0.44<br>4.95<br>88.2 | 0.34<br>3.82<br>68.5 | 11.0%<br>13.8%<br>12.6% | 2.16<br>1.86<br>1.76 | **90.8% (Conformal)** |
-| **TerraScan v2 (Multimodal FNO + Rover)**| **Total N (g/kg)**<br>**Available P (mg/kg)**<br>**Exch. K (mg/kg)** | **0.76**<br>**0.72**<br>**0.74** | **0.38**<br>**4.20**<br>**26.5** | **0.28**<br>**3.15**<br>**20.1** | **9.5%**<br>**11.7%**<br>**3.8%** | **2.50**<br>**2.19**<br>**5.85** | **91.4% (Conformal)** |
+**Table 1**: Model benchmark specification and validation protocol under 5-Fold Spatial Block Cross-Validation (5 km buffer). Target thresholds are derived from published peer-reviewed digital soil mapping literature (Castaldi et al., 2019; Ballabio et al., 2019; Romanenko et al., 2021).
 
-### 4.2 Analysis of Model Scaling and Conformal Uncertainty
-1. **Baseline Superiority**: The Multimodal FNO achieved an $R^2$ of **0.72 for Available Phosphorus** and **0.74 for Potassium**, representing a $>100\%$ relative accuracy improvement over Random Forest ($R^2 = 0.30$) and HistGradientBoosting ($R^2 = 0.25$).
-2. **Conformal Coverage Verification**: While standard models produced uncalibrated intervals that achieved only 64% to 81% empirical coverage, Split Conformal Calibration achieved **91.4% empirical coverage**, fulfilling the theoretical $\ge 90\%$ guarantee.
-3. **Closing the P and K Bottleneck**: Coupling the rover's in-situ contact probe with the FNO's anchor loss dropped Potassium RMSE from $142.4\text{ mg/kg}$ in v1 to **$26.5\text{ mg/kg}$ in v2**, and Phosphorus RMSE to **$4.2\text{ mg/kg}$**—finally achieving agronomically actionable precision!
+| Model Architecture | Target Nutrient | Model Role / Inductive Bias | Target $R^2$ (Spatial CV) | Target NRMSE (%) | Conformal Coverage Target |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Dummy (Mean Baseline)** | Total N<br>Available P<br>Exch. K | Trivial baseline; checks regression-to-the-mean | $R^2 \approx 0.0$ | Baseline benchmark | — |
+| **PLSR (5 components)** | Total N<br>Available P<br>Exch. K | Linear spectral baseline; checks direct absorption | Literature reference ($R^2 \sim 0.30\text{--}0.45$) | $< 25\%$ | Uncalibrated |
+| **Random Forest** | Total N<br>Available P<br>Exch. K | Non-linear ensemble; standard digital soil mapping baseline | Literature reference ($R^2 \sim 0.30\text{--}0.50$) | $< 20\%$ | Uncalibrated |
+| **HistGradientBoosting** | Total N<br>Available P<br>Exch. K | Gradient boosted trees; competitive tabular baseline | Literature reference ($R^2 \sim 0.30\text{--}0.55$) | $< 20\%$ | Uncalibrated |
+| **TerraScan v1 (4-Layer MLP)** | Total N<br>Available P<br>Exch. K | Re-implemented v1 baseline; evaluates point-MLP failure | Baseline audit ($R^2 < 0.25$ expected) | Baseline audit | Uncalibrated |
+| **TerraScan v2 (Satellite FNO)** | Total N<br>Available P<br>Exch. K | Operator learning on S2 medoids + DEM slope | **TARGET: $R^2 > 0.65$ (N), $> 0.50$ (P, K)** | **TARGET: $< 15\%$** | $\ge 90\%$ (Conformal) |
+| **TerraScan v2 (Multimodal FNO + Rover)** | **Total N (g/kg)**<br>**Available P (mg/kg)**<br>**Exch. K (mg/kg)** | **Full multimodal system (S2 + Rover + Anchor Loss)** | **TARGET: $R^2 > 0.70$ (N), $> 0.65$ (P, K)** | **TARGET: $< 12\%$** | **$\ge 90\%$ (Statistically Guaranteed)** |
+
+### 4.3 Evaluation Protocol & Acceptance Criteria
+1. **Hypothesis Confirmation**: Hypothesis $H_1$ (Multimodal FNO superiority over baselines) requires demonstrating a statistically significant improvement in out-of-fold $R^2$ ($\Delta R^2 \ge 0.15$, $p < 0.01$ via paired Wilcoxon signed-rank test across spatial blocks) compared to Random Forest and HistGradientBoosting.
+2. **Conformal Validity**: Hypothesis $H_2$ requires that empirical coverage across held-out spatial blocks satisfies $1 - \alpha \ge 90.0\%$, with average prediction interval widths remaining agronomically actionable ($\le 15\text{ mg/kg}$ for Available P).
+3. **Closing the P and K Bottleneck**: Coupling the rover's in-situ contact probe with the FNO's anchor loss is designed to resolve the zero-vibrational infrared limitation of ionic K⁺ and trace P by anchoring continuous landscape transport to certified laboratory ground truth.
 
 ---
 
@@ -155,7 +162,7 @@ The failure of v1 was not a lack of training epochs; it was an attempt to force 
 
 1. **Tillage History Uncertainty**: The depth-stratification operator ($\psi(\beta_{\text{till}}, H)$) assumes knowledge of field tillage management. If a field recently converted from conventional tillage to no-till without documentation, the assumed $\beta_{\text{till}}$ value ($0.25$ vs. $0.05$) introduces vertical integration bias.
 2. **Heavy Crop Residue Interference**: In continuous no-till corn systems with high surface stover ($>60\%$ surface cover), NBR2 filtering may mask out extensive field acreage, forcing the model to rely more heavily on rover ground sampling.
-3. **Geological Domain Shift**: The FNO was calibrated on Mid-Atlantic alfisols and inceptisols. Applying the model to tropical oxisols or arid aridisols requires recalibration on local soil series.
+3. **Geological Domain Shift**: The FNO architecture and depth-stratification priors are specifically parameterized for Mid-Atlantic alfisols and inceptisols. Validating the model across tropical oxisols or arid aridisols will require local soil series data ingestion and re-parameterization.
 4. **Soil Moisture Saturation**: In fields with standing surface water ($\theta_{\text{VWC}} > 40\%$), diffuse optical reflectance is replaced by specular water reflection, requiring surveys to be postponed until fields reach field capacity.
 
 ---

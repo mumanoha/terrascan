@@ -27,6 +27,14 @@ Grade 9–10 student researcher; explain reasoning at a level that teaches, not 
    concepts. When writing or updating research docs, include a "💻 Computer Science Translation"
    callout block alongside technical chemistry definitions.
 
+## Result-integrity rule
+Any specific quantitative result (R², RMSE, MAE, coverage %, cost, runtime) that
+appears in docs/, README.md, or knowledge/ MUST link to one of: (a) a real experiment
+folder under experiments/ with a results file, (b) a cited external source, or (c) be
+explicitly labeled "TARGET (not yet validated)". Before writing any such number,
+self-check which of these three it is. If none apply, do not write a specific number
+— describe the expected direction/magnitude in words instead.
+
 ## Standing workflow
 PLAN → confirm with user → EXECUTE → VERIFY (cite sources / show metrics) →
 DOCUMENT (update /knowledge/ + walkthrough.md) → LEARNING RECAP (format below) →

@@ -119,16 +119,16 @@ if TORCH_AVAILABLE:
             x_latent = self.p(x_in)
 
             x1 = self.conv0(x_latent) + self.w0(x_latent)
-            x_latent = F.gelU(x1)
+            x_latent = F.gelu(x1)
 
             x2 = self.conv1(x_latent) + self.w1(x_latent)
-            x_latent = F.gelU(x2)
+            x_latent = F.gelu(x2)
 
             x3 = self.conv2(x_latent) + self.w2(x_latent)
-            x_latent = F.gelU(x3)
+            x_latent = F.gelu(x3)
 
             x4 = self.conv3(x_latent) + self.w3(x_latent)
-            x_latent = F.gelU(x4)
+            x_latent = F.gelu(x4)
 
             out = self.q(x_latent)
             mean_pred = F.softplus(out[:, :self.out_channels, :, :])  # Physical non-negativity
