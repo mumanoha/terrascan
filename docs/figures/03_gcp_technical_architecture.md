@@ -17,7 +17,7 @@ TerraScan v2 implements an enterprise, production-grade cloud pipeline on Google
 ## Full Technical Architecture Diagram
 
 ```mermaid
-flowchart LR
+flowchart TB
     %% Styling Classes
     classDef edgeBox fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
     classDef satBox fill:#E0F7FA,stroke:#00838F,stroke-width:2px,color:#006064;
@@ -27,82 +27,97 @@ flowchart LR
     classDef userBox fill:#E0F2F1,stroke:#00796B,stroke-width:2px,color:#004D40;
     classDef secBox fill:#ECEFF1,stroke:#455A64,stroke-width:2px,stroke-dasharray: 4 4,color:#263238;
 
-    subgraph SUB1 ["SUBGRAPH 1: Field & Edge"]
+    subgraph TIER1 ["TIER 1: INGESTION, TELEMETRY & SPATIAL FEATURE STREAMING"]
         direction TB
-        ROV["<b>TerraBot Ground Rover</b><br/>• Local SQLite Buffer (WAL)<br/>• Monotonic Seq IDs & SHA-256<br/>• Store-and-Forward Engine"]:::edgeBox
-        GW["<b>LoRaWAN Gateway</b><br/>• 8-Ch SX1302 Concentrator<br/>• 4G LTE Rural Uplink"]:::edgeBox
-        LNS["<b>LoRaWAN Server (LNS)</b><br/>• The Things Stack / ChirpStack<br/><i>(Cloud IoT Core retired 2023)</i>"]:::edgeBox
-        ROV -->|"Uplink Packet"| GW
-        GW -->|"UDP Forward"| LNS
+        subgraph INGEST_CHANNELS ["Field & Satellite Data Collection Pipelines"]
+            direction LR
+            subgraph SUB1 ["1. Field & Edge (Ground Telemetry)"]
+                direction TB
+                ROV["<b>TerraBot Ground Rover</b><br/>• Local SQLite Buffer (WAL)<br/>• Monotonic Seq IDs & SHA-256<br/>• Store-and-Forward Engine"]:::edgeBox
+                GW["<b>LoRaWAN Gateway</b><br/>• 8-Ch SX1302 Concentrator<br/>• 4G LTE Rural Uplink"]:::edgeBox
+                LNS["<b>LoRaWAN Server (LNS)</b><br/>• The Things Stack / ChirpStack<br/><i>(Cloud IoT Core retired 2023)</i>"]:::edgeBox
+                ROV -->|"Uplink Packet"| GW
+                GW -->|"UDP Forward"| LNS
+            end
+
+            subgraph SUB2 ["2. Satellite Ingestion (Earth Observation)"]
+                direction TB
+                CDSE["<b>Earth Observation</b><br/>• Copernicus CDSE / GEE API<br/>• Sentinel-2 L2A (10m BOA)"]:::satBox
+                GCS_RAW["<b>GCS Raw Imagery</b><br/>• gs://terrascan-raw-tiles<br/>• Multi-spectral GeoTIFF"]:::satBox
+                DF_BATCH["<b>Cloud Dataflow (Batch)</b><br/>• Apache Beam Preprocessing<br/>• SCL Cloud/Shadow Filter<br/>• Bare-Soil Medoid Composite"]:::satBox
+                CDSE -->|"Scheduled Pull"| GCS_RAW
+                GCS_RAW -->|"Trigger Job"| DF_BATCH
+            end
+        end
+
+        subgraph SUB3 ["3. Cloud Ingestion & Streaming Feature Store"]
+            direction LR
+            WH["<b>Cloud Run Webhook</b><br/>• Fast Stateless Ingestion<br/>• HMAC Signature Verification"]:::ingestBox
+            PS["<b>Cloud Pub/Sub</b><br/>• Topic: telemetry-ingest<br/>• Topic: rover-commands"]:::ingestBox
+            DF_STREAM["<b>Cloud Dataflow (Streaming)</b><br/>• Deduplication & Windowing<br/>• H3 / Geohash Spatial Join"]:::ingestBox
+            FS["<b>Vertex AI Feature Store</b><br/>• BigQuery-Backed Serving<br/>• ST_CONTAINS Spatial Lookup"]:::ingestBox
+            GCS_TRAIN["<b>Cloud Storage (GCS)</b><br/>• Versioned Parquet Shards<br/>• gs://terrascan-training-data"]:::ingestBox
+
+            WH -->|"Publish Verified Telemetry"| PS
+            PS -->|"Pull Subscription"| DF_STREAM
+            DF_STREAM -->|"Upsert Ground Truth"| FS
+            DF_STREAM -->|"Materialize Datasets"| GCS_TRAIN
+        end
+
+        LNS -->|"HTTPS JSON Webhook"| WH
+        DF_BATCH -->|"Write Bare-Soil Features"| FS
     end
 
-    subgraph SUB2 ["SUBGRAPH 2: Satellite Ingestion"]
-        direction TB
-        CDSE["<b>Earth Observation</b><br/>• Copernicus CDSE / GEE API<br/>• Sentinel-2 L2A (10m BOA)"]:::satBox
-        GCS_RAW["<b>GCS Raw Imagery</b><br/>• gs://terrascan-raw-tiles<br/>• Multi-spectral GeoTIFF"]:::satBox
-        DF_BATCH["<b>Cloud Dataflow (Batch)</b><br/>• Apache Beam Preprocessing<br/>• SCL Cloud/Shadow Filter<br/>• Bare-Soil Medoid Composite"]:::satBox
-        CDSE -->|"Scheduled Pull"| GCS_RAW
-        GCS_RAW -->|"Trigger Job"| DF_BATCH
+    subgraph TIER2 ["TIER 2: AI / ML MODELING, APPLICATION LOGIC & FARMER DELIVERY"]
+        direction LR
+        subgraph SUB4 ["4. AI / ML Platform (Vertex AI)"]
+            direction TB
+            V_PIPE["<b>Vertex AI Pipelines</b><br/>• Automated Retraining DAG<br/>• Kubeflow Pipelines v2"]:::mlBox
+            V_TRAIN["<b>Vertex AI Training</b><br/>• PyTorch 2.4 FNO2d Container<br/>• NVIDIA L4 GPU Acceleration<br/>• Sobolev H¹ Spectral Loss"]:::mlBox
+            V_EXP["<b>Vertex AI Experiments</b><br/>• Spatial Block-CV Tracking<br/>• R², RMSE, PICP Logs"]:::mlBox
+            V_REG["<b>Vertex AI Model Registry</b><br/>• terrascan-fno-v2:prod<br/>• terrascan-pinn-v1:archived"]:::mlBox
+            V_END["<b>Vertex AI Endpoint</b><br/>• Scalable TorchServe Endpoint<br/>• Split Conformal Prediction"]:::mlBox
+
+            V_PIPE -->|"Orchestrate"| V_TRAIN
+            V_TRAIN <-->|"Track Metrics"| V_EXP
+            V_TRAIN -->|"Register Checkpoint"| V_REG
+            V_REG -->|"Deploy Validated"| V_END
+        end
+
+        subgraph APP_AND_DELIVERY ["Application, Analytics & Delivery"]
+            direction TB
+            subgraph SUB5 ["5. Application & Data Layer"]
+                direction LR
+                AUTH["<b>Identity Platform / Auth</b><br/>• Farmer JWT & RBAC"]:::appBox
+                API["<b>Cloud Run API Backend</b><br/>• FastAPI Asynchronous Microservice<br/>• Multi-modal Feature Aggregator<br/>• ISO-XML Prescription Engine"]:::appBox
+                FS_DB["<b>Cloud Firestore</b><br/>• Farmer Orgs & Field GeoJSON<br/>• Rover State & Telemetry Index"]:::appBox
+                BQ["<b>BigQuery Warehouse</b><br/>• Partitioned Analytics Store<br/>• Spatial GIS ST_INTERSECTS"]:::appBox
+                GCS_VRT["<b>GCS Presigned Bucket</b><br/>• ISO-XML TaskData.xml<br/>• ESRI Shapefile Downloads"]:::appBox
+
+                AUTH -->|"Verify Token"| API
+                API <-->|"Field Geometry"| FS_DB
+                API -->|"Generate Signed URL"| GCS_VRT
+            end
+
+            subgraph SUB6 ["6. Farmer-Facing Delivery"]
+                direction LR
+                PORTAL["<b>Web & Mobile Portal</b><br/>• Next.js PWA + Tailwind CSS<br/>• Google Maps Platform JS API<br/>• Interactive N/P/K & Confidence"]:::userBox
+                ALERTS["<b>Alerts Engine</b><br/>• Cloud Tasks Queue<br/>• Firebase Cloud Messaging<br/>• Twilio SMS Runoff Alerts"]:::userBox
+                CAB["<b>Precision Tractor Cab</b><br/>• John Deere Operations Center<br/>• Climate FieldView ISO-XML<br/>• Variable Rate Controller"]:::userBox
+            end
+
+            API -->|"Stream GeoJSON Prescription"| PORTAL
+            API -->|"Dispatch Runoff Warning"| ALERTS
+            GCS_VRT -->|"Direct HTTP Download"| CAB
+        end
+
+        V_END -->|"Serve Online Inferences"| API
     end
 
-    subgraph SUB3 ["SUBGRAPH 3: Cloud Ingestion & Streaming"]
-        direction TB
-        WH["<b>Cloud Run Webhook</b><br/>• Fast Stateless Ingestion<br/>• HMAC Signature Verification"]:::ingestBox
-        PS["<b>Cloud Pub/Sub</b><br/>• Topic: telemetry-ingest<br/>• Topic: rover-commands"]:::ingestBox
-        DF_STREAM["<b>Cloud Dataflow (Streaming)</b><br/>• Stream Deduplication & Windowing<br/>• H3 / Geohash Spatial Join"]:::ingestBox
-        FS["<b>Vertex AI Feature Store</b><br/>• BigQuery-Backed Serving<br/>• ST_CONTAINS Spatial Lookup"]:::ingestBox
-        GCS_TRAIN["<b>Cloud Storage (GCS)</b><br/>• Versioned Parquet Shards<br/>• gs://terrascan-training-data"]:::ingestBox
-
-        WH -->|"Publish Verified Telemetry"| PS
-        PS -->|"Pull Subscription"| DF_STREAM
-        DF_STREAM -->|"Upsert Ground Truth"| FS
-        DF_STREAM -->|"Materialize Datasets"| GCS_TRAIN
-    end
-
-    subgraph SUB4 ["SUBGRAPH 4: AI / ML Platform (Vertex AI)"]
-        direction TB
-        V_PIPE["<b>Vertex AI Pipelines</b><br/>• Automated Retraining DAG<br/>• Kubeflow Pipelines v2"]:::mlBox
-        V_TRAIN["<b>Vertex AI Training</b><br/>• PyTorch 2.4 FNO2d Container<br/>• NVIDIA L4 GPU Acceleration<br/>• Sobolev H¹ Spectral Loss"]:::mlBox
-        V_EXP["<b>Vertex AI Experiments</b><br/>• Spatial Block-CV Tracking<br/>• R², RMSE, PICP Logs"]:::mlBox
-        V_REG["<b>Vertex AI Model Registry</b><br/>• terrascan-fno-v2:prod<br/>• terrascan-pinn-v1:archived"]:::mlBox
-        V_END["<b>Vertex AI Endpoint</b><br/>• Scalable TorchServe Endpoint<br/>• Split Conformal Prediction"]:::mlBox
-
-        V_PIPE -->|"Orchestrate"| V_TRAIN
-        V_TRAIN <-->|"Track Metrics"| V_EXP
-        V_TRAIN -->|"Register Checkpoint"| V_REG
-        V_REG -->|"Deploy Validated"| V_END
-    end
-
-    subgraph SUB5 ["SUBGRAPH 5: Application & Data Layer"]
-        direction TB
-        AUTH["<b>Identity Platform / Auth</b><br/>• Farmer JWT & RBAC"]:::appBox
-        FS_DB["<b>Cloud Firestore</b><br/>• Farmer Orgs & Field GeoJSON<br/>• Rover State & Telemetry Index"]:::appBox
-        API["<b>Cloud Run API Backend</b><br/>• FastAPI Asynchronous Microservice<br/>• Multi-modal Feature Aggregator<br/>• ISO-XML Prescription Engine"]:::appBox
-        BQ["<b>BigQuery Warehouse</b><br/>• Partitioned Analytics Store<br/>• Spatial GIS ST_INTERSECTS"]:::appBox
-        GCS_VRT["<b>GCS Presigned Bucket</b><br/>• ISO-XML TaskData.xml<br/>• ESRI Shapefile Downloads"]:::appBox
-
-        AUTH -->|"Verify Token"| API
-        API <-->|"Field Geometry"| FS_DB
-        API -->|"Generate Signed URL"| GCS_VRT
-    end
-
-    subgraph SUB6 ["SUBGRAPH 6: Farmer-Facing Delivery"]
-        direction TB
-        PORTAL["<b>Web & Mobile Portal</b><br/>• Next.js PWA + Tailwind CSS<br/>• Google Maps Platform JS API<br/>• Interactive N/P/K & Confidence"]:::userBox
-        ALERTS["<b>Alerts Engine</b><br/>• Cloud Tasks Queue<br/>• Firebase Cloud Messaging<br/>• Twilio SMS Runoff Alerts"]:::userBox
-        CAB["<b>Precision Tractor Cab</b><br/>• John Deere Operations Center<br/>• Climate FieldView ISO-XML<br/>• Variable Rate Controller"]:::userBox
-    end
-
-    %% Pure DAG Flow: Left to Right across Subgraphs
-    LNS -->|"HTTPS JSON Webhook"| WH
-    DF_BATCH -->|"Write Bare-Soil Features"| FS
-    GCS_TRAIN -->|"Trigger Retrain"| V_PIPE
-    FS -->|"Fetch Geospatial Features"| API
-    FS <-->|"Bi-directional Sync"| BQ
-    V_END -->|"Serve Online Inferences"| API
-    API -->|"Stream GeoJSON Prescription"| PORTAL
-    API -->|"Dispatch Runoff Warning"| ALERTS
-    GCS_VRT -->|"Direct HTTP Download"| CAB
+    %% Inter-Tier Connections
+    GCS_TRAIN ==>|"Trigger Retrain"| V_PIPE
+    FS ==>|"Fetch Geospatial Features"| API
+    FS <-.->|"Bi-directional Sync"| BQ
 
     subgraph CROSS ["CROSS-CUTTING PLATFORM SERVICES (Enterprise Security, Governance & Operations)"]
         direction LR
@@ -112,6 +127,8 @@ flowchart LR
         VPC["<b>VPC Service Controls</b><br/>Private Google Access Perimeter"]:::secBox
         CB["<b>Cloud Build & Artifact Registry</b><br/>Container CI/CD & Security Scans"]:::secBox
     end
+
+    CROSS -.->|"Security, Secrets, Monitoring & Audit Across All Tiers"| TIER2
 ```
 
 ---
